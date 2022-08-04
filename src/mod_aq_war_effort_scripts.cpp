@@ -115,19 +115,63 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.01", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.02", 30000))
                 {
-
+                    if (!unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_1, 50.0f))
+                    {
+                        Position pos = WarEffortGameobjectPositions[GO_BANDAGES_ALLIANCE_TIER_1];
+                        unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
+                    }
                 }
                 else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.02", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.03", 30000))
                 {
+                    if (GameObject* go = unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_1, 50.0f))
+                    {
+                        go->Delete();
+                    }
 
+                    if (!unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_2, 50.0f))
+                    {
+                        Position pos = WarEffortGameobjectPositions[GO_BANDAGES_ALLIANCE_TIER_1];
+                        unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
+                    }
                 }
                 else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.03", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.04", 30000))
                 {
+                    if (GameObject* go = unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_2, 50.0f))
+                    {
+                        go->Delete();
+                    }
 
+                    if (!unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_3, 50.0f))
+                    {
+                        Position pos = WarEffortGameobjectPositions[GO_BANDAGES_ALLIANCE_TIER_1];
+                        unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
+                    }
                 }
                 else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.04", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.05", 30000))
                 {
+                    if (GameObject* go = unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_3, 50.0f))
+                    {
+                        go->Delete();
+                    }
 
+                    if (!unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_4, 50.0f))
+                    {
+                        Position pos = WarEffortGameobjectPositions[GO_BANDAGES_ALLIANCE_TIER_1];
+                        unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_4, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
+                    }
+                }
+                else
+                {
+                    if (GameObject* go = unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_4, 50.0f))
+                    {
+                        go->Delete();
+                    }
+
+                    if (!unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_5, 50.0f))
+                    {
+                        Position pos = WarEffortGameobjectPositions[GO_BANDAGES_ALLIANCE_TIER_1];
+                        unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_5, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
+                    }
                 }
             }
             else
