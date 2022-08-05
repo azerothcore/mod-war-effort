@@ -5,7 +5,7 @@
 // From SC
 void ModAQWarEffortPlayerScripts();
 
-void Addmod_aq_war_effortScripts()
+void Addmod_war_effortScripts()
 {
     ModAQWarEffortPlayerScripts();
 }
