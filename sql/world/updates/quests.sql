@@ -56,3 +56,25 @@ CREATE TABLE `wareffort` (
 );
 
 UPDATE `quest_template_addon` SET `SpecialFlags` = `SpecialFlags`|1 WHERE `id` IN (8518, 8521, 8605, 8608, 8523, 8609, 8525, 8527, 8612, 8616, 8529, 8614, 8504, 8510, 8550, 8581, 8506, 8583, 8493, 8533, 8512, 8514, 8589, 8600, 8516, 8591);
+
+-- Horde commendation npcs
+DELETE FROM `creature` WHERE `id1` IN (21968, 15738, 15737, 15739, 15736);
+INSERT INTO `creature` (`guid`, `id1`, `id2`, `id3`, `map`, `zoneId`, `areaId`, `spawnMask`, `phaseMask`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `wander_distance`, `currentwaypoint`, `curhealth`, `curmana`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`, `ScriptName`, `VerifiedBuild`) VALUES
+(3110482,15736,0,0,1,0,0,1,1,0,1592.17,-4097.91,34.9759,6.25645,300,0,0,2614,0,0,0,0,0,'',0),
+(3110484,15737,0,0,1,0,0,1,1,0,1595.6,-4091.94,35.8097,5.20323,300,0,0,2614,0,0,0,0,0,'',0),
+(3110485,15738,0,0,1,0,0,1,1,0,1598.27,-4090.5,35.8736,5.13568,300,0,0,2614,0,0,0,0,0,'',0),
+(3110483,15739,0,0,1,0,0,1,1,0,1592.84,-4094.01,35.6404,5.82527,300,0,0,2614,0,0,0,0,0,'',0),
+(3110486,21968,0,0,1,0,0,1,1,0,1601.01,-4091.87,35.5195,4.52778,300,0,0,2614,0,0,0,0,0,'',0);
+
+UPDATE `creature_template` SET `unit_flags` = `unit_flags`|2 WHERE `entry` IN (15736, 15737, 15738, 15739, 21968);
+
+-- Alliance commendation npcs
+DELETE FROM `creature` WHERE `id1` IN (15731, 15733, 15735, 15734, 21969);
+INSERT INTO `creature` (`guid`, `id1`, `id2`, `id3`, `map`, `zoneId`, `areaId`, `spawnMask`, `phaseMask`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `wander_distance`, `currentwaypoint`, `curhealth`, `curmana`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`, `ScriptName`, `VerifiedBuild`) VALUES
+(3110489,15731,0,0,0,0,0,1,1,0,-4938.75,-1206.29,501.658,4.03146,300,0,0,2614,0,0,0,0,0,'',0),
+(3110490,15733,0,0,0,0,0,1,1,0,-4936.65,-1209.73,501.658,3.95796,300,0,0,2614,0,0,0,0,0,'',0),
+(3110492,15734,0,0,0,0,0,1,1,0,-4943.13,-1204.78,501.658,4.62712,300,0,0,2614,0,0,0,0,0,'',0),
+(3110491,15735,0,0,0,0,0,1,1,0,-4936.06,-1214.82,501.639,3.21465,300,0,0,2614,0,0,0,0,0,'',0),
+(3110493,21969,0,0,0,0,0,1,1,0,-4946.71,-1206.24,501.658,5.19933,300,0,0,2614,0,0,0,0,0,''0);
+
+UPDATE `creature_template` SET `unit_flags` = `unit_flags`|2 WHERE `entry` IN (15731, 15733, 15735, 15734, 21969);
