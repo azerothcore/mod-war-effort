@@ -123,3 +123,40 @@ INSERT INTO `creature_questender` (`id`, `quest`) VALUES
 
 UPDATE `creature_template` SET `npcflag` = `npcflag`|2 WHERE `entry` IN (15731, 15733, 15735, 15734, 21969);
 UPDATE `creature_template` SET `npcflag` = `npcflag`|2 WHERE `entry` IN (15736, 15737, 15738, 15739, 21968);
+
+-- Warlord Grohuk / Field Marshall Snowfall
+UPDATE `creature_template` SET `npcflag` = `npcflag`|1|2 WHERE `entry` IN (15700, 15701); 
+
+DELETE FROM `creature_queststarter` WHERE `id` = 15701 AND `quest` IN (8846, 8847, 8848, 8849, 8850);
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES
+(15701, 8846),
+(15701, 8847),
+(15701, 8848),
+(15701, 8849),
+(15701, 8850);
+
+DELETE FROM `creature_queststarter` WHERE `id` = 15700 AND `quest` IN (8851, 8852, 8853, 8854, 8855);
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES
+(15700, 8851),
+(15700, 8852),
+(15700, 8853),
+(15700, 8854),
+(15700, 8855);
+
+DELETE FROM `creature_questender` WHERE `id` = 15701 AND `quest` IN (8846, 8847, 8848, 8849, 8850);
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES
+(15701, 8846),
+(15701, 8847),
+(15701, 8848),
+(15701, 8849),
+(15701, 8850);
+
+DELETE FROM `creature_questender` WHERE `id` = 15700 AND `quest` IN (8851, 8852, 8853, 8854, 8855);
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES
+(15700, 8851),
+(15700, 8852),
+(15700, 8853),
+(15700, 8854),
+(15700, 8855);
+
+UPDATE `quest_template_addon` SET `SpecialFlags` = `SpecialFlags`|1 WHERE `id` IN (8846, 8847, 8848, 8849, 8850, 8851, 8852, 8853, 8854, 8855);
