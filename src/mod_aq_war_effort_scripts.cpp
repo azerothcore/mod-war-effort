@@ -100,8 +100,6 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
 
     // @todo: This whole thing probably could be done better, but no time to find a better design right now.
 
-    LOG_ERROR("sql.sql", "Materials: {} Material: {}", storedMats, material);
-
     switch (material)
     {
         // Bandages
