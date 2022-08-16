@@ -75,6 +75,11 @@ INSERT INTO `creature` (`guid`, `id1`, `id2`, `id3`, `map`, `zoneId`, `areaId`, 
 (3110491,15735,0,0,0,0,0,1,1,0,-4936.06,-1214.82,501.639,3.21465,300,0,0,2614,0,0,0,0,0,'',0),
 (3110493,21969,0,0,0,0,0,1,1,0,-4946.71,-1206.24,501.658,5.19933,300,0,0,2614,0,0,0,0,0,'',0);
 
+DELETE FROM `creature` WHERE `id1` IN (15700, 15701);
+INSERT INTO `creature` (`guid`, `id1`, `id2`, `id3`, `map`, `zoneId`, `areaId`, `spawnMask`, `phaseMask`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `wander_distance`, `currentwaypoint`, `curhealth`, `curmana`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`, `ScriptName`, `VerifiedBuild`) VALUES
+(3110499,15701,0,0,0,0,0,1,1,1,-4961.68,-1243.19,501.672,2.46488,300,0,0,30520,0,0,0,134254592,0,'',0),
+(3110502,15700,0,0,1,0,0,1,1,1,1581.39,-4202.27,41.8233,4.96133,300,0,1,30520,0,2,0,134217728,0,'',0);
+
 DELETE FROM `creature_queststarter` WHERE `quest` IN (8814, 8825, 8818, 8822, 8842, 8813, 8821, 8812, 8820, 8811, 8819, 8815, 8823, 8814, 8822, 8816, 8824, 8817, 8826, 10693, 10698, 10699, 10700)  AND `id` IN (21968, 15738, 15737, 15739, 15736, 15731, 15733, 15735, 15734, 21969);
 INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES
 (15735, 8814), -- Human
@@ -160,3 +165,46 @@ INSERT INTO `creature_questender` (`id`, `quest`) VALUES
 (15700, 8855);
 
 UPDATE `quest_template_addon` SET `SpecialFlags` = `SpecialFlags`|1 WHERE `id` IN (8846, 8847, 8848, 8849, 8850, 8851, 8852, 8853, 8854, 8855);
+
+SET @NPC := 15701;
+SET @PATH := @NPC * 10;
+DELETE FROM `waypoint_data` WHERE `id` = @PATH;
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `orientation`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES
+(@PATH, 1, -4975.995605, -1231.047607, 501.676392, 2.419811, 0, 0, 0, 100, 0),
+(@PATH, 2, -4994.347168, -1208.347168, 501.676392, 2.021614, 0, 0, 0, 100, 0),
+(@PATH, 3, -4992.331543, -1191.743164, 501.661407, 1.034368, 0, 0, 0, 100, 0),
+(@PATH, 4, -4977.826172, -1184.909424, 501.659943, 6.023217, 0, 0, 0, 100, 0),
+(@PATH, 5, -4963.172852, -1191.700562, 501.659943, 5.594390, 0, 0, 0, 100, 0),
+(@PATH, 6, -4953.628418, -1206.568237, 501.659943, 5.093306, 0, 0, 0, 100, 0),
+(@PATH, 7, -4944.017578, -1226.812378, 501.659241, 4.541171, 0, 0, 0, 100, 0),
+(@PATH, 8, -4951.852051, -1236.240234, 501.664520, 3.806038, 0, 0, 0, 100, 0);
+
+DELETE FROM `creature_template_addon` WHERE `entry` IN (@NPC);
+INSERT INTO `creature_template_addon` (`entry`,`path_id`,`mount`,`bytes1`,`bytes2`,`emote`,`visibilityDistanceType`,`auras`) VALUES
+(@NPC,@PATH,14347,0,1,0,0, '');
+
+UPDATE `creature` SET `MovementType` = 2, `currentwaypoint` = 1 WHERE `id1` = 15701;
+
+SET @NPC := 15700;
+SET @PATH := @NPC * 10;
+DELETE FROM `waypoint_data` WHERE `id` = @PATH;
+INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `position_z`, `orientation`, `delay`, `move_type`, `action`, `action_chance`, `wpguid`) VALUES
+(@PATH, 1, 1578.605957, -4182.716797, 39.134441, 1.467103, 0, 0, 0, 100, 0),
+(@PATH, 2, 1580.579590, -4161.104004, 35.596245, 1.116816, 0, 0, 0, 100, 0),
+(@PATH, 3, 1592.792236, -4137.739746, 32.130486, 0.887479, 0, 0, 0, 100, 0),
+(@PATH, 4, 1606.842896, -4121.146484, 29.679825, 0.547402, 0, 0, 0, 100, 0),
+(@PATH, 5, 1647.132690, -4103.271484, 31.960993, 0.366760, 0, 0, 0, 100, 0),
+(@PATH, 6, 1684.800659, -4091.520508, 37.020203, 0.325919, 0, 0, 0, 100, 0),
+(@PATH, 7, 1712.287964, -4083.820801, 40.581638, 0.325919, 0, 0, 0, 100, 0),
+(@PATH, 8, 1731.218018, -4067.316650, 45.004307, 0.883552, 0, 0, 0, 100, 0),
+(@PATH, 9, 1712.287964, -4083.820801, 40.581638, 0.325919, 0, 0, 0, 100, 0),
+(@PATH, 10, 1684.800659, -4091.520508, 37.020203, 0.325919, 0, 0, 0, 100, 0),
+(@PATH, 11, 1647.132690, -4103.271484, 31.960993, 0.366760, 0, 0, 0, 100, 0),
+(@PATH, 12, 1606.842896, -4121.146484, 29.679825, 0.547402, 0, 0, 0, 100, 0),
+(@PATH, 13, 1592.792236, -4137.739746, 32.130486, 0.887479, 0, 0, 0, 100, 0),
+(@PATH, 14, 1580.579590, -4161.104004, 35.596245, 1.116816, 0, 0, 0, 100, 0),
+(@PATH, 15, 1578.605957, -4182.716797, 39.134441, 1.467103, 0, 0, 0, 100, 0);
+
+UPDATE `creature_template_addon` SET `path_id` = @PATH WHERE `entry` = @NPC;
+
+UPDATE `creature` SET `MovementType` = 2, `currentwaypoint` = 1 WHERE `id1` = @NPC;
