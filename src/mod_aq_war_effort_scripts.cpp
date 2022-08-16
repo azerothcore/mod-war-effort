@@ -1011,7 +1011,7 @@ public:
         {
             _scheduler.CancelAll();
 
-            _scheduler.Schedule(3min, [this](TaskContext context)
+            _scheduler.Schedule(1min, [this](TaskContext context)
             {
                 if (sWarEffort->IsSaveNeeded())
                 {
@@ -1024,6 +1024,20 @@ public:
                     context.Repeat();
                 }
             });
+        }
+    }
+
+    void OnShutdownInitiate(ShutdownExitCode /*code*/, ShutdownMask /*mask*/) override
+    {
+        if (sWarEffort->IsEnabled())
+        {
+            _scheduler.CancelAll();
+
+            if (sWarEffort->IsSaveNeeded())
+            {
+                sWarEffort->SaveData();
+                sWarEffort->SetSaveStatus(false);
+            }
         }
     }
 
