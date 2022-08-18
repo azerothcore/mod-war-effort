@@ -270,7 +270,7 @@ public:
     [[nodiscard]] uint32 GetActiveEventId() { return sConfigMgr->GetOption<uint32>("ModWarEffort.Id", 1); }
     void CheckGoal(Unit* unit, uint8 material, uint8 team);
     [[nodiscard]] uint32 GetAccumulatedMaterials(uint8 material, uint8 team);
-    [[nodiscard]] bool IsBellowPercentGathered(uint8 material, uint8 team, int pct);
+    [[nodiscard]] bool IsBellowPercentGathered(uint8 material, uint8 team, float pct);
     void RemoveNearbyObject(uint32 entry, Unit* unit);
 
     void SaveData();

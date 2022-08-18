@@ -94,7 +94,7 @@ void WarEffort::LoadData()
     }
 };
 
-bool WarEffort::IsBellowPercentGathered(uint8 material, uint8 team, int pct)
+bool WarEffort::IsBellowPercentGathered(uint8 material, uint8 team, float pct)
 {
     auto materials = team == TEAM_ALLIANCE ? sWarEffort->materialsAlliance : sWarEffort->materialsHorde;
 
