@@ -94,11 +94,123 @@ void WarEffort::LoadData()
     }
 };
 
+bool WarEffort::IsBellowPercentGathered(uint8 material, uint8 team, int pct)
+{
+    auto materials = team == TEAM_ALLIANCE ? sWarEffort->materialsAlliance : sWarEffort->materialsHorde;
+
+    switch (material)
+    {
+        case MATERIAL_CAT_BANDAGES:
+            for (uint8 i = 0; i >= 3; ++i)
+            {
+                if (team == TEAM_ALLIANCE)
+                {
+                    if ((materials[i] * pct) < (WarEffortMaterialsAlliance[i].Goal * pct))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if ((materials[i] * pct) < (WarEffortMaterialsHorde[i].Goal * pct))
+                    {
+                        return true;
+                    }
+                }
+
+            }
+            break;
+        case MATERIAL_CAT_FOOD:
+            for (uint8 i = 3; i >= 6; ++i)
+            {
+                if (team == TEAM_ALLIANCE)
+                {
+                    if ((materials[i] * pct) < (WarEffortMaterialsAlliance[i].Goal * pct))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if ((materials[i] * pct) < (WarEffortMaterialsHorde[i].Goal * pct))
+                    {
+                        return true;
+                    }
+                }
+
+            }
+            break;
+        case MATERIAL_CAT_HERBS:
+            for (uint8 i = 6; i >= 9; ++i)
+            {
+                if (team == TEAM_ALLIANCE)
+                {
+                    if ((materials[i] * pct) < (WarEffortMaterialsAlliance[i].Goal * pct))
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if ((materials[i] * pct) < (WarEffortMaterialsHorde[i].Goal * pct))
+                    {
+                        return true;
+                    }
+                }
+
+            }
+            break;
+        case MATERIAL_CAT_METAL:
+            for (uint8 i = 9; i >= 12; ++i)
+            {
+                if (team == TEAM_ALLIANCE)
+                {
+                    if ((materials[i] * pct) < (WarEffortMaterialsAlliance[i].Goal * pct))
+                    {
+                        return true;
+                    }
+                }
+                else if ((materials[i] * pct) < (WarEffortMaterialsHorde[i].Goal * pct))
+                {
+                    return true;
+                }
+
+            }
+            break;
+        case MATERIAL_CAT_LEATHER:
+            for (uint8 i = 12; i >= 15; ++i)
+            {
+                if (team == TEAM_ALLIANCE)
+                {
+                    if ((materials[i] * pct) < (WarEffortMaterialsAlliance[i].Goal * pct))
+                    {
+                        return true;
+                    }
+                }
+                else if ((materials[i] * pct) < (WarEffortMaterialsHorde[i].Goal * pct))
+                {
+                    return true;
+                }
+
+            }
+            break;
+
+    }
+}
+
+void WarEffort::RemoveNearbyObject(uint32 entry, Unit* unit)
+{
+    if (GameObject* go = unit->FindNearestGameObject(entry, 50.0f))
+    {
+        go->Delete();
+    }
+}
+
 void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
 {
-    uint32 storedMats = sWarEffort->GetAccumulatedMaterials(material, team);
-
     // @todo: This whole thing probably could be done better, but no time to find a better design right now.
+
+    uint32 goal = team == TEAM_ALLIANCE ? WarEffortMaterialsAlliance[material].Goal : WarEffortMaterialsHorde[material].Goal;
 
     switch (material)
     {
@@ -107,11 +219,11 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
         {
             if (team == TEAM_ALLIANCE)
             {
-                if (storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.01", 30000))
+                if (sWarEffort->IsBellowPercentGathered(material, team, 0.20))
                 {
                     //
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.01", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.02", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.20) && sWarEffort->IsBellowPercentGathered(material, team, 0.40))
                 {
                     if (!unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_1, 50.0f))
                     {
@@ -119,12 +231,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.02", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.03", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40) && sWarEffort->IsBellowPercentGathered(material, team, 0.60))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_1, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_BANDAGES_ALLIANCE_TIER_1, unit);
 
                     if (!unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_2, 50.0f))
                     {
@@ -132,12 +241,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.03", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.04", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_2, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_BANDAGES_ALLIANCE_TIER_2, unit);
 
                     if (!unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_3, 50.0f))
                     {
@@ -145,12 +251,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.04", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.05", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80) && sWarEffort->IsBellowPercentGathered(material, team, 1.0))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_3, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_BANDAGES_ALLIANCE_TIER_3, unit);
 
                     if (!unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_4, 50.0f))
                     {
@@ -160,10 +263,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_4, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_BANDAGES_ALLIANCE_TIER_4, unit);
 
                     if (!unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_5, 50.0f))
                     {
@@ -174,7 +274,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
             }
             else
             {
-                if (storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Bandages.01", 30000))
+                if (sWarEffort->IsBellowPercentGathered(material, team, 0.20))
                 {
                     if (!unit->FindNearestGameObject(GO_BANDAGES_HORDE_INITIAL, 50.0f))
                     {
@@ -182,12 +282,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_BANDAGES_HORDE_INITIAL, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Bandages.01", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Bandages.02", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.20) && sWarEffort->IsBellowPercentGathered(material, team, 0.40))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_BANDAGES_HORDE_INITIAL, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_BANDAGES_HORDE_INITIAL, unit);
 
                     if (!unit->FindNearestGameObject(GO_BANDAGES_HORDE_TIER_1, 50.0f))
                     {
@@ -195,12 +292,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_BANDAGES_HORDE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ() + 0.7f, pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Bandages.02", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Bandages.03", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40) && sWarEffort->IsBellowPercentGathered(material, team, 0.60))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_BANDAGES_HORDE_TIER_1, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_BANDAGES_HORDE_TIER_1, unit);
 
                     if (!unit->FindNearestGameObject(GO_BANDAGES_HORDE_TIER_2, 50.0f))
                     {
@@ -208,12 +302,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_BANDAGES_HORDE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Bandages.03", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Bandages.04", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_BANDAGES_HORDE_TIER_2, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_BANDAGES_HORDE_TIER_2, unit);
 
                     if (!unit->FindNearestGameObject(GO_BANDAGES_HORDE_TIER_3, 50.0f))
                     {
@@ -221,12 +312,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_BANDAGES_HORDE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Bandages.04", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Bandages.05", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80) && sWarEffort->IsBellowPercentGathered(material, team, 1.0))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_BANDAGES_HORDE_TIER_3, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_BANDAGES_HORDE_TIER_3, unit);
 
                     if (!unit->FindNearestGameObject(GO_BANDAGES_HORDE_TIER_4, 50.0f))
                     {
@@ -236,10 +324,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_BANDAGES_HORDE_TIER_4, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_BANDAGES_HORDE_TIER_4, unit);
 
                     if (!unit->FindNearestGameObject(GO_BANDAGES_HORDE_TIER_5, 50.0f))
                     {
@@ -255,11 +340,11 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
         case MATERIAL_CAT_FOOD:
             if (team == TEAM_ALLIANCE)
             {
-                if (storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Food.01", 30000))
+                if (sWarEffort->IsBellowPercentGathered(material, team, 0.20))
                 {
                     //
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Food.01", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Food.02", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.20) && sWarEffort->IsBellowPercentGathered(material, team, 0.40))
                 {
                     if (!unit->FindNearestGameObject(GO_FOOD_ALLIANCE_TIER_1, 50.0f))
                     {
@@ -267,13 +352,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_FOOD_ALLIANCE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.496055f, -0.868291f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Food.02", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Food.03", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40) && sWarEffort->IsBellowPercentGathered(material, team, 0.60))
                 {
-
-                    if (GameObject* go = unit->FindNearestGameObject(GO_FOOD_ALLIANCE_TIER_1, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_FOOD_ALLIANCE_TIER_1, unit);
 
                     if (!unit->FindNearestGameObject(GO_FOOD_ALLIANCE_TIER_2, 50.0f))
                     {
@@ -281,12 +362,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_FOOD_ALLIANCE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.496055f, -0.868291f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Food.03", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Food.04", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_FOOD_ALLIANCE_TIER_2, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_FOOD_ALLIANCE_TIER_2, unit);
 
                     if (!unit->FindNearestGameObject(GO_FOOD_ALLIANCE_TIER_3, 50.0f))
                     {
@@ -294,12 +372,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_FOOD_ALLIANCE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.496055f, -0.868291f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Food.04", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Food.05", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80) && sWarEffort->IsBellowPercentGathered(material, team, 1.0))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_FOOD_ALLIANCE_TIER_3, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_FOOD_ALLIANCE_TIER_3, unit);
 
                     if (!unit->FindNearestGameObject(GO_FOOD_ALLIANCE_TIER_4, 50.0f))
                     {
@@ -309,10 +384,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_FOOD_ALLIANCE_TIER_4, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_FOOD_ALLIANCE_TIER_4, unit);
 
                     if (!unit->FindNearestGameObject(GO_FOOD_ALLIANCE_TIER_5, 50.0f))
                     {
@@ -323,7 +395,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
             }
             else
             {
-                if (storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Food.01", 30000))
+                if (sWarEffort->IsBellowPercentGathered(material, team, 0.20))
                 {
                     if (!unit->FindNearestGameObject(GO_FOOD_HORDE_INITIAL, 50.0f))
                     {
@@ -331,12 +403,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_INITIAL, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ() + 0.5f, pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Food.01", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Food.02", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.20) && sWarEffort->IsBellowPercentGathered(material, team, 0.40))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_FOOD_HORDE_INITIAL, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_FOOD_HORDE_INITIAL, unit);
 
                     if (!unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_1, 50.0f))
                     {
@@ -344,12 +413,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ() + 0.7f, pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Food.02", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Food.03", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40) && sWarEffort->IsBellowPercentGathered(material, team, 0.60))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_1, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_FOOD_HORDE_TIER_1, unit);
 
                     if (!unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_2, 50.0f))
                     {
@@ -357,12 +423,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ() + 0.7f, pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Food.03", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Food.04", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_2, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_FOOD_HORDE_TIER_2, unit);
 
                     if (!unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_3, 50.0f))
                     {
@@ -370,12 +433,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ() + 0.7f, pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Food.04", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Food.05", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80) && sWarEffort->IsBellowPercentGathered(material, team, 1.0))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_3, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_FOOD_HORDE_TIER_3, unit);
 
                     if (!unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_4, 50.0f))
                     {
@@ -385,15 +445,12 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_FOOD_HORDE_INITIAL, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_FOOD_HORDE_TIER_4, unit);
 
-                    if (!unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_4, 50.0f))
+                    if (!unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_5, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_FOOD_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_4, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ() + 0.7f, pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_5, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ() + 0.7f, pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
             }
@@ -402,11 +459,11 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
         case MATERIAL_CAT_HERBS:
             if (team == TEAM_ALLIANCE)
             {
-                if (storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Herbs.01", 30000))
+                if (sWarEffort->IsBellowPercentGathered(material, team, 0.20))
                 {
                     // Already spawned by default
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Herbs.01", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Herbs.02", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.20) && sWarEffort->IsBellowPercentGathered(material, team, 0.40))
                 {
                     if (!unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_1, 50.0f))
                     {
@@ -414,12 +471,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_HERBS_ALLIANCE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.522955f, -0.85236f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Herbs.02", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Herbs.03", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40) && sWarEffort->IsBellowPercentGathered(material, team, 0.60))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_1, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_HERBS_ALLIANCE_TIER_1, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_2, 50.0f))
                     {
@@ -427,12 +481,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_HERBS_ALLIANCE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.522955f, -0.85236f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Herbs.03", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Herbs.04", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_2, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_HERBS_ALLIANCE_TIER_2, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_3, 50.0f))
                     {
@@ -440,12 +491,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_HERBS_ALLIANCE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.522955f, -0.85236f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Herbs.04", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Herbs.05", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80f) && sWarEffort->IsBellowPercentGathered(material, team, 1.0f))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_3, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_HERBS_ALLIANCE_TIER_3, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_4, 50.0f))
                     {
@@ -455,10 +503,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_4, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_HERBS_ALLIANCE_TIER_4, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_5, 50.0f))
                     {
@@ -469,7 +514,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
             }
             else
             {
-                if (storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Herbs.01", 30000))
+                if (sWarEffort->IsBellowPercentGathered(material, team, 0.20))
                 {
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_INITIAL, 50.0f))
                     {
@@ -477,12 +522,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_HERBS_HORDE_INITIAL, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Herbs.01", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Herbs.02", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.20) && sWarEffort->IsBellowPercentGathered(material, team, 0.40))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_HERBS_HORDE_INITIAL, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_HERBS_HORDE_INITIAL, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_1, 50.0f))
                     {
@@ -490,12 +532,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_HERBS_HORDE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Herbs.02", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Herbs.03", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40) && sWarEffort->IsBellowPercentGathered(material, team, 0.60))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_1, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_HERBS_HORDE_TIER_1, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_2, 50.0f))
                     {
@@ -503,12 +542,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_HERBS_HORDE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Herbs.03", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Herbs.04", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_2, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_HERBS_HORDE_TIER_2, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_3, 50.0f))
                     {
@@ -516,12 +552,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_HERBS_HORDE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Herbs.04", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Herbs.05", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80) && sWarEffort->IsBellowPercentGathered(material, team, 1.0))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_3, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_HERBS_HORDE_TIER_3, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_4, 50.0f))
                     {
@@ -531,10 +564,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_4, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_HERBS_HORDE_TIER_4, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_5, 50.0f))
                     {
@@ -548,11 +578,11 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
         case MATERIAL_CAT_METAL:
             if (team == TEAM_ALLIANCE)
             {
-                if (storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Metal.01", 30000))
+                if (sWarEffort->IsBellowPercentGathered(material, team, 0.20))
                 {
                     //
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Metal.01", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Metal.02", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.20) && sWarEffort->IsBellowPercentGathered(material, team, 0.40))
                 {
                     if (!unit->FindNearestGameObject(GO_METAL_ALLIANCE_TIER_1, 50.0f))
                     {
@@ -560,12 +590,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_METAL_ALLIANCE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.522955f, -0.85236f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Metal.02", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Metal.03", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40) && sWarEffort->IsBellowPercentGathered(material, team, 0.60))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_METAL_ALLIANCE_TIER_1, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_METAL_ALLIANCE_TIER_1, unit);
 
                     if (!unit->FindNearestGameObject(GO_METAL_ALLIANCE_TIER_2, 50.0f))
                     {
@@ -573,12 +600,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_METAL_ALLIANCE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Metal.03", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Metal.04", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_METAL_ALLIANCE_TIER_2, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_METAL_ALLIANCE_TIER_2, unit);
 
                     if (!unit->FindNearestGameObject(GO_METAL_ALLIANCE_TIER_3, 50.0f))
                     {
@@ -586,12 +610,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_METAL_ALLIANCE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Metal.04", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Metal.05", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80f) && sWarEffort->IsBellowPercentGathered(material, team, 1.0f))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_METAL_ALLIANCE_TIER_3, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_METAL_ALLIANCE_TIER_3, unit);
 
                     if (!unit->FindNearestGameObject(GO_METAL_ALLIANCE_TIER_4, 50.0f))
                     {
@@ -601,10 +622,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_METAL_ALLIANCE_TIER_4, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_METAL_ALLIANCE_TIER_4, unit);
 
                     if (!unit->FindNearestGameObject(GO_METAL_ALLIANCE_TIER_5, 50.0f))
                     {
@@ -615,7 +633,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
             }
             else
             {
-                if (storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Metal.01", 30000))
+                if (sWarEffort->IsBellowPercentGathered(material, team, 0.20))
                 {
                     if (!unit->FindNearestGameObject(GO_METAL_HORDE_INITIAL, 50.0f))
                     {
@@ -623,12 +641,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_METAL_HORDE_INITIAL, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), -0.0f, -0.0f, -0.987771f, 0.155913f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Metal.01", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Metal.02", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.20) && sWarEffort->IsBellowPercentGathered(material, team, 0.40))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_METAL_HORDE_INITIAL, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_METAL_HORDE_INITIAL, unit);
 
                     if (!unit->FindNearestGameObject(GO_METAL_HORDE_TIER_1, 50.0f))
                     {
@@ -636,12 +651,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_METAL_HORDE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Metal.02", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Metal.03", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40) && sWarEffort->IsBellowPercentGathered(material, team, 0.60))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_METAL_HORDE_TIER_1, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_METAL_HORDE_TIER_1, unit);
 
                     if (!unit->FindNearestGameObject(GO_METAL_HORDE_TIER_2, 50.0f))
                     {
@@ -649,12 +661,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_METAL_HORDE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Metal.03", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Metal.04", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_METAL_HORDE_TIER_2, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_METAL_HORDE_TIER_2, unit);
 
                     if (!unit->FindNearestGameObject(GO_METAL_HORDE_TIER_3, 50.0f))
                     {
@@ -662,12 +671,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_METAL_HORDE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Metal.04", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Metal.05", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80) && sWarEffort->IsBellowPercentGathered(material, team, 1.0))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_METAL_HORDE_TIER_3, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_METAL_HORDE_TIER_3, unit);
 
                     if (!unit->FindNearestGameObject(GO_METAL_HORDE_TIER_4, 50.0f))
                     {
@@ -677,10 +683,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_METAL_HORDE_TIER_4, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_METAL_HORDE_TIER_4, unit);
 
                     if (!unit->FindNearestGameObject(GO_METAL_HORDE_TIER_5, 50.0f))
                     {
@@ -694,11 +697,11 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
         case MATERIAL_CAT_LEATHER:
             if (team == TEAM_ALLIANCE)
             {
-                if (storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Leather.01", 30000))
+                if (sWarEffort->IsBellowPercentGathered(material, team, 0.20))
                 {
                     // Already spawned
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Leather.01", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Leather.02", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.20) && sWarEffort->IsBellowPercentGathered(material, team, 0.40))
                 {
                     if (!unit->FindNearestGameObject(GO_LEATHER_ALLIANCE_TIER_1, 50.0f))
                     {
@@ -706,12 +709,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_LEATHER_ALLIANCE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.788872f, -0.614557f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Leather.02", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Leather.03", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40) && sWarEffort->IsBellowPercentGathered(material, team, 0.60))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_LEATHER_ALLIANCE_TIER_1, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_LEATHER_ALLIANCE_TIER_1, unit);
 
                     if (!unit->FindNearestGameObject(GO_LEATHER_ALLIANCE_TIER_2, 50.0f))
                     {
@@ -719,12 +719,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_LEATHER_ALLIANCE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Leather.03", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Leather.04", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_LEATHER_ALLIANCE_TIER_2, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_LEATHER_ALLIANCE_TIER_2, unit);
 
                     if (!unit->FindNearestGameObject(GO_LEATHER_ALLIANCE_TIER_3, 50.0f))
                     {
@@ -732,12 +729,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_LEATHER_ALLIANCE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Leather.04", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Leather.05", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80) && sWarEffort->IsBellowPercentGathered(material, team, 1.0))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_LEATHER_ALLIANCE_TIER_3, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_LEATHER_ALLIANCE_TIER_3, unit);
 
                     if (!unit->FindNearestGameObject(GO_LEATHER_ALLIANCE_TIER_4, 50.0f))
                     {
@@ -747,10 +741,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_LEATHER_ALLIANCE_TIER_4, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_LEATHER_ALLIANCE_TIER_4, unit);
 
                     if (!unit->FindNearestGameObject(GO_LEATHER_ALLIANCE_TIER_5, 50.0f))
                     {
@@ -761,7 +752,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
             }
             else
             {
-                if (storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Leather.01", 30000))
+                if (sWarEffort->IsBellowPercentGathered(material, team, 0.20))
                 {
                     if (!unit->FindNearestGameObject(GO_LEATHER_HORDE_INITIAL, 50.0f))
                     {
@@ -770,12 +761,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     }
 
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Leather.01", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Leather.02", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.20) && sWarEffort->IsBellowPercentGathered(material, team, 0.40))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_METAL_HORDE_INITIAL, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_METAL_HORDE_INITIAL, unit);
 
                     if (!unit->FindNearestGameObject(GO_LEATHER_HORDE_TIER_1, 50.0f))
                     {
@@ -783,12 +771,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_LEATHER_HORDE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Leather.02", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Leather.03", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40) && sWarEffort->IsBellowPercentGathered(material, team, 0.60))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_METAL_HORDE_INITIAL, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_METAL_HORDE_INITIAL, unit);
 
                     if (!unit->FindNearestGameObject(GO_LEATHER_HORDE_TIER_2, 50.0f))
                     {
@@ -796,12 +781,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_LEATHER_HORDE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Leather.03", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Leather.04", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_LEATHER_HORDE_TIER_2, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_LEATHER_HORDE_TIER_2, unit);
 
                     if (!unit->FindNearestGameObject(GO_LEATHER_HORDE_TIER_3, 50.0f))
                     {
@@ -809,12 +791,9 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                         unit->GetMap()->SummonGameObject(GO_LEATHER_HORDE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
-                else if (storedMats >= sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Leather.04", 30000) && storedMats < sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Leather.05", 30000))
+                else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80f) && sWarEffort->IsBellowPercentGathered(material, team, 1.0f))
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_LEATHER_HORDE_TIER_3, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_LEATHER_HORDE_TIER_3, unit);
 
                     if (!unit->FindNearestGameObject(GO_LEATHER_HORDE_TIER_4, 50.0f))
                     {
@@ -824,10 +803,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else
                 {
-                    if (GameObject* go = unit->FindNearestGameObject(GO_LEATHER_HORDE_TIER_4, 50.0f))
-                    {
-                        go->Delete();
-                    }
+                    sWarEffort->RemoveNearbyObject(GO_LEATHER_HORDE_TIER_4, unit);
 
                     if (!unit->FindNearestGameObject(GO_LEATHER_HORDE_TIER_5, 50.0f))
                     {

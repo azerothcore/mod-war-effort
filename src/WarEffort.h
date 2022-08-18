@@ -14,6 +14,7 @@ struct WarEffortData
     uint8 Material;
     uint32 QuestId;
     uint8 MaterialCategory;
+    uint32 Goal;
 };
 
 struct WarEffortGameobject
@@ -212,40 +213,40 @@ std::map<uint32, Position> WarEffortGameobjectPositions =
 
 WarEffortData const WarEffortMaterialsAlliance[MAX_WAREFFORT_MATERIALS] =
 {
-    { MATERIAL_LINEN,           QUEST_LINEN_BANDAGES,       MATERIAL_CAT_BANDAGES },
-    { MATERIAL_SILK,            QUEST_SILK_BANDAGES,        MATERIAL_CAT_BANDAGES },
-    { MATERIAL_RUNECLOTH_A,     QUEST_RUNECLOTH_BANDAGES_A, MATERIAL_CAT_BANDAGES },
-    { MATERIAL_ALBACORE,        QUEST_ALBACORE,             MATERIAL_CAT_FOOD },
-    { MATERIAL_RAPTOR,          QUEST_RAPTOR,               MATERIAL_CAT_FOOD },
-    { MATERIAL_YELLOWTAIL_A,    QUEST_YELLOWTAIL_A,         MATERIAL_CAT_FOOD },
-    { MATERIAL_STRANGLEKELP,    QUEST_STRANGLEKELP,         MATERIAL_CAT_HERBS },
-    { MATERIAL_ARTHAS_TEARS,    QUEST_ARTHAS_TEARS,         MATERIAL_CAT_HERBS },
-    { MATERIAL_PURPLE_LOTUS_A,  QUEST_PURPLE_LOTUS_A,       MATERIAL_CAT_HERBS },
-    { MATERIAL_IRON,            QUEST_IRON,                 MATERIAL_CAT_METAL },
-    { MATERIAL_THORIUM,         QUEST_THORIUM,              MATERIAL_CAT_METAL },
-    { MATERIAL_COOPER_A,        QUEST_COOPER_A,             MATERIAL_CAT_METAL },
-    { MATERIAL_LIGHT_LEATHER,   QUEST_LIGHT_LEATHER,        MATERIAL_CAT_LEATHER },
-    { MATERIAL_MEDIUM_LEATHER,  QUEST_MEDIUM_LEATHER,       MATERIAL_CAT_LEATHER },
-    { MATERIAL_THICK_LEATHER_A, QUEST_THICK_LEATHER_A,      MATERIAL_CAT_LEATHER },
+    { MATERIAL_LINEN,           QUEST_LINEN_BANDAGES,       MATERIAL_CAT_BANDAGES, sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.01", 30000) },
+    { MATERIAL_SILK,            QUEST_SILK_BANDAGES,        MATERIAL_CAT_BANDAGES, sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.02", 30000) },
+    { MATERIAL_RUNECLOTH_A,     QUEST_RUNECLOTH_BANDAGES_A, MATERIAL_CAT_BANDAGES, sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Bandages.03", 30000) },
+    { MATERIAL_ALBACORE,        QUEST_ALBACORE,             MATERIAL_CAT_FOOD,     sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Food.01", 30000) },
+    { MATERIAL_RAPTOR,          QUEST_RAPTOR,               MATERIAL_CAT_FOOD,     sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Food.02", 30000) },
+    { MATERIAL_YELLOWTAIL_A,    QUEST_YELLOWTAIL_A,         MATERIAL_CAT_FOOD,     sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Food.03", 30000) },
+    { MATERIAL_STRANGLEKELP,    QUEST_STRANGLEKELP,         MATERIAL_CAT_HERBS,    sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Herbs.01", 30000) },
+    { MATERIAL_ARTHAS_TEARS,    QUEST_ARTHAS_TEARS,         MATERIAL_CAT_HERBS,    sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Herbs.02", 30000) },
+    { MATERIAL_PURPLE_LOTUS_A,  QUEST_PURPLE_LOTUS_A,       MATERIAL_CAT_HERBS,    sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Herbs.03", 30000) },
+    { MATERIAL_IRON,            QUEST_IRON,                 MATERIAL_CAT_METAL,    sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Metal.01", 30000) },
+    { MATERIAL_THORIUM,         QUEST_THORIUM,              MATERIAL_CAT_METAL,    sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Metal.02", 30000) },
+    { MATERIAL_COOPER_A,        QUEST_COOPER_A,             MATERIAL_CAT_METAL,    sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Metal.03", 30000) },
+    { MATERIAL_LIGHT_LEATHER,   QUEST_LIGHT_LEATHER,        MATERIAL_CAT_LEATHER,  sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Leather.01", 30000) },
+    { MATERIAL_MEDIUM_LEATHER,  QUEST_MEDIUM_LEATHER,       MATERIAL_CAT_LEATHER,  sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Leather.02", 30000) },
+    { MATERIAL_THICK_LEATHER_A, QUEST_THICK_LEATHER_A,      MATERIAL_CAT_LEATHER,  sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Alliance.Leather.03", 30000) },
 };
 
 WarEffortData const WarEffortMaterialsHorde[MAX_WAREFFORT_MATERIALS] =
 {
-    { MATERIAL_WOOL,            QUEST_WOOL_BANDAGES,        MATERIAL_CAT_BANDAGES },
-    { MATERIAL_MAGEWEAVE,       QUEST_MAGEWEAVE_BANDAGES,   MATERIAL_CAT_BANDAGES },
-    { MATERIAL_RUNECLOTH_B,     QUEST_RUNECLOTH_BANDAGES_H, MATERIAL_CAT_BANDAGES },
-    { MATERIAL_WOLF,            QUEST_WOLF_STEAKS,          MATERIAL_CAT_FOOD },
-    { MATERIAL_SALMON,          QUEST_SALMON,               MATERIAL_CAT_FOOD },
-    { MATERIAL_YELLOWTAIL_H,    QUEST_YELLOWTAIL_H,         MATERIAL_CAT_FOOD },
-    { MATERIAL_PEACEBLOOM,      QUEST_PEACEBLOOM,           MATERIAL_CAT_FOOD },
-    { MATERIAL_FIREBLOOM,       QUEST_FIREBLOOM,            MATERIAL_CAT_HERBS },
-    { MATERIAL_PURPLE_LOTUS_H,  QUEST_PURPLE_LOTUS_H,       MATERIAL_CAT_HERBS },
-    { MATERIAL_TIN,             QUEST_TIN,                  MATERIAL_CAT_METAL },
-    { MATERIAL_MITHRIL,         QUEST_MITHRIL,              MATERIAL_CAT_METAL },
-    { MATERIAL_COOPER_H,        QUEST_COOPER_H,             MATERIAL_CAT_METAL },
-    { MATERIAL_HEAVY_LEATHER,   QUEST_HEAVY_LEATHER,        MATERIAL_CAT_LEATHER },
-    { MATERIAL_RUGGER_LEATHER,  QUEST_RUGGED_LEATHER,       MATERIAL_CAT_LEATHER },
-    { MATERIAL_THICK_LEATHER_B, QUEST_THICK_LEATHER_H,      MATERIAL_CAT_LEATHER }
+    { MATERIAL_WOOL,            QUEST_WOOL_BANDAGES,        MATERIAL_CAT_BANDAGES, sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Bandages.01", 30000)  },
+    { MATERIAL_MAGEWEAVE,       QUEST_MAGEWEAVE_BANDAGES,   MATERIAL_CAT_BANDAGES, sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Bandages.02", 30000)  },
+    { MATERIAL_RUNECLOTH_B,     QUEST_RUNECLOTH_BANDAGES_H, MATERIAL_CAT_BANDAGES, sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Bandages.03", 30000)  },
+    { MATERIAL_WOLF,            QUEST_WOLF_STEAKS,          MATERIAL_CAT_FOOD,     sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Food.01", 30000)  },
+    { MATERIAL_SALMON,          QUEST_SALMON,               MATERIAL_CAT_FOOD,     sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Food.02", 30000)  },
+    { MATERIAL_YELLOWTAIL_H,    QUEST_YELLOWTAIL_H,         MATERIAL_CAT_FOOD,     sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Food.03", 30000)  },
+    { MATERIAL_PEACEBLOOM,      QUEST_PEACEBLOOM,           MATERIAL_CAT_FOOD,     sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Herbs.01", 30000)  },
+    { MATERIAL_FIREBLOOM,       QUEST_FIREBLOOM,            MATERIAL_CAT_HERBS,    sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Herbs.02", 30000)  },
+    { MATERIAL_PURPLE_LOTUS_H,  QUEST_PURPLE_LOTUS_H,       MATERIAL_CAT_HERBS,    sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Herbs.03", 30000)  },
+    { MATERIAL_TIN,             QUEST_TIN,                  MATERIAL_CAT_METAL,    sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Metal.01", 30000)  },
+    { MATERIAL_MITHRIL,         QUEST_MITHRIL,              MATERIAL_CAT_METAL,    sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Metal.02", 30000)  },
+    { MATERIAL_COOPER_H,        QUEST_COOPER_H,             MATERIAL_CAT_METAL,    sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Metal.03", 30000)  },
+    { MATERIAL_HEAVY_LEATHER,   QUEST_HEAVY_LEATHER,        MATERIAL_CAT_LEATHER,  sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Leather.01", 30000)  },
+    { MATERIAL_RUGGER_LEATHER,  QUEST_RUGGED_LEATHER,       MATERIAL_CAT_LEATHER,  sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Leather.02", 30000)  },
+    { MATERIAL_THICK_LEATHER_B, QUEST_THICK_LEATHER_H,      MATERIAL_CAT_LEATHER,  sConfigMgr->GetOption<uint32>("ModWarEffort.Goal.Horde.Leather.03", 30000)  }
 };
 
 class WarEffort
@@ -269,6 +270,8 @@ public:
     [[nodiscard]] uint32 GetActiveEventId() { return sConfigMgr->GetOption<uint32>("ModWarEffort.Id", 1); }
     void CheckGoal(Unit* unit, uint8 material, uint8 team);
     [[nodiscard]] uint32 GetAccumulatedMaterials(uint8 material, uint8 team);
+    [[nodiscard]] bool IsBellowPercentGathered(uint8 material, uint8 team, int pct);
+    void RemoveNearbyObject(uint32 entry, Unit* unit);
 
     void SaveData();
     void LoadData();
