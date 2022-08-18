@@ -918,7 +918,7 @@ public:
     {
         if (player->GetTeamId() == TEAM_ALLIANCE)
         {
-            for (WarEffortData data : WarEffortMaterialsAlliance)
+            for (WarEffortData data : sWarEffort->WarEffortMaterialsAlliance)
             {
                 if (quest->GetQuestId() == data.QuestId || quest->GetQuestId() == data.QuestId + 1 /* Repeatable ones */)
                 {
@@ -937,7 +937,7 @@ public:
         }
         else
         {
-            for (WarEffortData data : WarEffortMaterialsHorde)
+            for (WarEffortData data : sWarEffort->WarEffortMaterialsHorde)
             {
                 if (quest->GetQuestId() == data.QuestId || quest->GetQuestId() == data.QuestId + 1 /* Repeatable ones */)
                 {
