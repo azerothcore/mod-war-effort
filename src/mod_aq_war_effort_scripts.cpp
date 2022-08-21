@@ -230,7 +230,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_1, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_BANDAGES_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_1, pos, 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40f) && sWarEffort->IsBellowPercentGathered(material, team, 0.60f))
@@ -240,7 +240,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_2, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_BANDAGES_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_2, pos, 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60f) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
@@ -250,7 +250,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_3, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_BANDAGES_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_3, pos, 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80) && sWarEffort->IsBellowPercentGathered(material, team, 1.0f))
@@ -260,7 +260,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_4, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_BANDAGES_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_4, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_4, pos, 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
                     }
                 }
                 else
@@ -270,7 +270,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_BANDAGES_ALLIANCE_TIER_5, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_BANDAGES_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_5, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_BANDAGES_ALLIANCE_TIER_5, pos, 0.0f, 0.0f, -0.886385f, -0.462949f, 14 * DAY * MINUTE);
                     }
                 }
             }
@@ -281,7 +281,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_BANDAGES_HORDE_INITIAL, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_BANDAGES_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_BANDAGES_HORDE_INITIAL, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_BANDAGES_HORDE_INITIAL, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.20f) && sWarEffort->IsBellowPercentGathered(material, team, 0.40f))
@@ -301,7 +301,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_BANDAGES_HORDE_TIER_2, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_BANDAGES_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_BANDAGES_HORDE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_BANDAGES_HORDE_TIER_2, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60f) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
@@ -311,7 +311,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_BANDAGES_HORDE_TIER_3, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_BANDAGES_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_BANDAGES_HORDE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_BANDAGES_HORDE_TIER_3, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80) && sWarEffort->IsBellowPercentGathered(material, team, 1.0f))
@@ -321,7 +321,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_BANDAGES_HORDE_TIER_4, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_BANDAGES_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_BANDAGES_HORDE_TIER_4, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_BANDAGES_HORDE_TIER_4, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
                 else
@@ -331,7 +331,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_BANDAGES_HORDE_TIER_5, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_BANDAGES_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_BANDAGES_HORDE_TIER_5, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 0);
+                        unit->GetMap()->SummonGameObject(GO_BANDAGES_HORDE_TIER_5, pos, 0.0f, 0.0f, 0.0f, 0.0f, 0);
                     }
                 }
             }
@@ -351,7 +351,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_FOOD_ALLIANCE_TIER_1, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_FOOD_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_FOOD_ALLIANCE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.496055f, -0.868291f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_FOOD_ALLIANCE_TIER_1, pos, 0.0f, 0.0f, -0.496055f, -0.868291f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40f) && sWarEffort->IsBellowPercentGathered(material, team, 0.60f))
@@ -361,7 +361,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_FOOD_ALLIANCE_TIER_2, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_FOOD_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_FOOD_ALLIANCE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.496055f, -0.868291f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_FOOD_ALLIANCE_TIER_2, pos, 0.0f, 0.0f, -0.496055f, -0.868291f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60f) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
@@ -371,7 +371,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_FOOD_ALLIANCE_TIER_3, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_FOOD_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_FOOD_ALLIANCE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.496055f, -0.868291f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_FOOD_ALLIANCE_TIER_3, pos, 0.0f, 0.0f, -0.496055f, -0.868291f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80) && sWarEffort->IsBellowPercentGathered(material, team, 1.0f))
@@ -381,7 +381,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_FOOD_ALLIANCE_TIER_4, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_FOOD_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_FOOD_ALLIANCE_TIER_4, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.496055f, -0.868291f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_FOOD_ALLIANCE_TIER_4, pos, 0.0f, 0.0f, -0.496055f, -0.868291f, 14 * DAY * MINUTE);
                     }
                 }
                 else
@@ -391,7 +391,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_FOOD_ALLIANCE_TIER_5, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_FOOD_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_FOOD_ALLIANCE_TIER_5, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.496055f, -0.868291f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_FOOD_ALLIANCE_TIER_5, pos, 0.0f, 0.0f, -0.496055f, -0.868291f, 14 * DAY * MINUTE);
                     }
                 }
             }
@@ -402,7 +402,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_FOOD_HORDE_INITIAL, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_FOOD_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_INITIAL, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ() + 0.5f, pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_INITIAL, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.20f) && sWarEffort->IsBellowPercentGathered(material, team, 0.40f))
@@ -412,7 +412,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_1, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_BANDAGES_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ() + 0.7f, pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_1, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40f) && sWarEffort->IsBellowPercentGathered(material, team, 0.60f))
@@ -422,7 +422,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_2, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_FOOD_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ() + 0.7f, pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_2, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60f) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
@@ -432,7 +432,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_3, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_FOOD_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ() + 0.7f, pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_3, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80) && sWarEffort->IsBellowPercentGathered(material, team, 1.0f))
@@ -442,7 +442,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_4, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_FOOD_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_4, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ() + 0.7f, pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_4, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
                 else
@@ -452,7 +452,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_5, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_FOOD_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_5, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ() + 0.7f, pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_5, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ() - 4.0f, pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
             }
@@ -470,7 +470,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_1, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_HERBS_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_HERBS_ALLIANCE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.522955f, -0.85236f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_HERBS_ALLIANCE_TIER_1, pos, 0.0f, 0.0f, -0.522955f, -0.85236f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40f) && sWarEffort->IsBellowPercentGathered(material, team, 0.60f))
@@ -480,7 +480,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_2, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_HERBS_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_HERBS_ALLIANCE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.522955f, -0.85236f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_HERBS_ALLIANCE_TIER_2, pos, 0.0f, 0.0f, -0.522955f, -0.85236f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60f) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
@@ -490,7 +490,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_3, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_HERBS_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_HERBS_ALLIANCE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.522955f, -0.85236f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_HERBS_ALLIANCE_TIER_3, pos, 0.0f, 0.0f, -0.522955f, -0.85236f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80f) && sWarEffort->IsBellowPercentGathered(material, team, 1.0f))
@@ -500,7 +500,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_4, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_HERBS_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_HERBS_ALLIANCE_TIER_4, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.522955f, -0.85236f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_HERBS_ALLIANCE_TIER_4, pos, 0.0f, 0.0f, -0.522955f, -0.85236f, 14 * DAY * MINUTE);
                     }
                 }
                 else
@@ -510,7 +510,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_5, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_HERBS_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_HERBS_ALLIANCE_TIER_5, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.522955f, -0.85236f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_HERBS_ALLIANCE_TIER_5, pos, 0.0f, 0.0f, -0.522955f, -0.85236f, 14 * DAY * MINUTE);
                     }
                 }
             }
@@ -521,7 +521,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_INITIAL, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_HERBS_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_HERBS_HORDE_INITIAL, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_HERBS_HORDE_INITIAL, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.20f) && sWarEffort->IsBellowPercentGathered(material, team, 0.40f))
@@ -531,7 +531,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_1, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_HERBS_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_HERBS_HORDE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_HERBS_HORDE_TIER_1, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40f) && sWarEffort->IsBellowPercentGathered(material, team, 0.60f))
@@ -541,7 +541,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_2, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_HERBS_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_HERBS_HORDE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_HERBS_HORDE_TIER_2, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60f) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
@@ -551,7 +551,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_3, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_HERBS_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_HERBS_HORDE_TIER_3, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_HERBS_HORDE_TIER_3, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80) && sWarEffort->IsBellowPercentGathered(material, team, 1.0f))
@@ -561,7 +561,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_4, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_HERBS_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_HERBS_HORDE_TIER_4, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_HERBS_HORDE_TIER_4, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
                 else
@@ -571,7 +571,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_5, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_HERBS_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_HERBS_HORDE_TIER_5, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_HERBS_HORDE_TIER_5, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
             }
@@ -589,7 +589,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_METAL_ALLIANCE_TIER_1, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_METAL_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_METAL_ALLIANCE_TIER_1, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, -0.522955f, -0.85236f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_METAL_ALLIANCE_TIER_1, pos, 0.0f, 0.0f, -0.522955f, -0.85236f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40f) && sWarEffort->IsBellowPercentGathered(material, team, 0.60f))
@@ -599,7 +599,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                     if (!unit->FindNearestGameObject(GO_METAL_ALLIANCE_TIER_2, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_METAL_ALLIANCE_TIER_1];
-                        unit->GetMap()->SummonGameObject(GO_METAL_ALLIANCE_TIER_2, pos.GetPositionX(), pos.GetPositionY(), pos.GetPositionZ(), pos.GetOrientation(), 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        unit->GetMap()->SummonGameObject(GO_METAL_ALLIANCE_TIER_2, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60f) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
