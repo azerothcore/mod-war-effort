@@ -50,7 +50,7 @@ void WarEffort::SaveData()
 
 void WarEffort::LoadData()
 {
-    if (QueryResult result = CharacterDatabase.Query("SELECT * FROM Wareffort WHERE id = {}", sWarEffort->GetActiveEventId()))
+    if (QueryResult result = CharacterDatabase.Query("SELECT * FROM wareffort WHERE id = {}", sWarEffort->GetActiveEventId()))
     {
         do
         {
