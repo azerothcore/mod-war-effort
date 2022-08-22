@@ -201,7 +201,8 @@ std::map<uint32, Position> WarEffortGameobjectPositions =
 {
     { GO_BANDAGES_HORDE_INITIAL, Position(1582.97f, -4112.28f, 34.0149f, 3.38216f) },
     { GO_HERBS_HORDE_INITIAL, Position(1633.08f, -4140.41f, 34.3886f, 3.79286f) },
-    { GO_FOOD_HORDE_INITIAL, Position(1623.2f, -4094.17f, 34.3933f, 3.9846f) },
+    { GO_FOOD_HORDE_INITIAL, Position(1623.2f, -4094.17f, 35.3933f, 3.9846f) },
+    { GO_FOOD_HORDE_TIER_1, Position(1630.44f, -4073.68f, 37.0707f, 2.77926f) },
     { GO_LEATHER_HORDE_INITIAL, Position(1588.53f, -4173.9f, 39.2266f, 3.90826f) },
     { GO_METAL_HORDE_INITIAL, Position(1682.33f, -4136.71f, 40.8444f, 3.4547f) },
     { GO_HERBS_ALLIANCE_TIER_1, Position(-4962.77f, -1261.97f, 501.672f, 1.10063f) },

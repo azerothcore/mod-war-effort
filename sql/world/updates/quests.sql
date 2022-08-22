@@ -208,3 +208,10 @@ INSERT INTO `waypoint_data` (`id`, `point`, `position_x`, `position_y`, `positio
 UPDATE `creature_template_addon` SET `path_id` = @PATH WHERE `entry` = @NPC;
 
 UPDATE `creature` SET `MovementType` = 2, `currentwaypoint` = 1 WHERE `id1` = @NPC;
+
+-- Baked Salmon (H)
+DELETE FROM `creature_queststarter` WHERE `id` = 15535 AND `quest` = 8616;
+INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES (15535, 8616);
+
+DELETE FROM `creature_questender` WHERE `id` = 15535 AND `quest` = 8616;
+INSERT INTO `creature_questender` (`id`, `quest`) VALUES (15535, 8616);

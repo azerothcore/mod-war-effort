@@ -101,7 +101,7 @@ bool WarEffort::IsBellowPercentGathered(uint8 material, uint8 team, float pct)
     switch (material)
     {
         case MATERIAL_CAT_BANDAGES:
-            for (uint8 i = 0; i >= 3; ++i)
+            for (uint8 i = 0; i <= 3; ++i)
             {
                 if (team == TEAM_ALLIANCE)
                 {
@@ -117,11 +117,10 @@ bool WarEffort::IsBellowPercentGathered(uint8 material, uint8 team, float pct)
                         return true;
                     }
                 }
-
             }
             break;
         case MATERIAL_CAT_FOOD:
-            for (uint8 i = 3; i >= 6; ++i)
+            for (uint8 i = 3; i <= 6; ++i)
             {
                 if (team == TEAM_ALLIANCE)
                 {
@@ -141,7 +140,7 @@ bool WarEffort::IsBellowPercentGathered(uint8 material, uint8 team, float pct)
             }
             break;
         case MATERIAL_CAT_HERBS:
-            for (uint8 i = 6; i >= 9; ++i)
+            for (uint8 i = 6; i <= 9; ++i)
             {
                 if (team == TEAM_ALLIANCE)
                 {
@@ -161,7 +160,7 @@ bool WarEffort::IsBellowPercentGathered(uint8 material, uint8 team, float pct)
             }
             break;
         case MATERIAL_CAT_METAL:
-            for (uint8 i = 9; i >= 12; ++i)
+            for (uint8 i = 9; i <= 12; ++i)
             {
                 if (team == TEAM_ALLIANCE)
                 {
@@ -178,7 +177,7 @@ bool WarEffort::IsBellowPercentGathered(uint8 material, uint8 team, float pct)
             }
             break;
         case MATERIAL_CAT_LEATHER:
-            for (uint8 i = 12; i >= 15; ++i)
+            for (uint8 i = 12; i <= 15; ++i)
             {
                 if (team == TEAM_ALLIANCE)
                 {
@@ -407,16 +406,18 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.20f) && sWarEffort->IsBellowPercentGathered(material, team, 0.40f))
                 {
+                    LOG_INFO("server.server", "WarEffort: Started stage 1 - Horde - Food");
                     sWarEffort->RemoveNearbyObject(GO_FOOD_HORDE_INITIAL, unit);
 
                     if (!unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_1, 50.0f))
                     {
-                        Position pos = WarEffortGameobjectPositions[GO_BANDAGES_HORDE_INITIAL];
-                        unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_1, pos, 0.0f, 0.0f, 0.0f, 0.0f, 14 * DAY * MINUTE);
+                        Position pos = WarEffortGameobjectPositions[GO_FOOD_HORDE_TIER_1];
+                        unit->GetMap()->SummonGameObject(GO_FOOD_HORDE_TIER_1, pos, 0.0f, 0.0f, -0.983634f, -0.180176f, 14 * DAY * MINUTE);
                     }
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40f) && sWarEffort->IsBellowPercentGathered(material, team, 0.60f))
                 {
+                    LOG_INFO("server.server", "WarEffort: Started stage 2 - Horde - Food");
                     sWarEffort->RemoveNearbyObject(GO_FOOD_HORDE_TIER_1, unit);
 
                     if (!unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_2, 50.0f))
@@ -427,6 +428,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60f) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
                 {
+                    LOG_INFO("server.server", "WarEffort: Started stage 3 - Horde - Food");
                     sWarEffort->RemoveNearbyObject(GO_FOOD_HORDE_TIER_2, unit);
 
                     if (!unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_3, 50.0f))
@@ -437,6 +439,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80) && sWarEffort->IsBellowPercentGathered(material, team, 1.0f))
                 {
+                    LOG_INFO("server.server", "WarEffort: Started stage 4 - Horde - Food");
                     sWarEffort->RemoveNearbyObject(GO_FOOD_HORDE_TIER_3, unit);
 
                     if (!unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_4, 50.0f))
@@ -447,6 +450,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else
                 {
+                    LOG_INFO("server.server", "WarEffort: Started stage 5 - Horde - Food");
                     sWarEffort->RemoveNearbyObject(GO_FOOD_HORDE_TIER_4, unit);
 
                     if (!unit->FindNearestGameObject(GO_FOOD_HORDE_TIER_5, 50.0f))
@@ -467,6 +471,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.20f) && sWarEffort->IsBellowPercentGathered(material, team, 0.40f))
                 {
+                    LOG_INFO("server.server", "WarEffort: Started stage 1 - Alliance - Herbs");
                     if (!unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_1, 50.0f))
                     {
                         Position pos = WarEffortGameobjectPositions[GO_HERBS_ALLIANCE_TIER_1];
@@ -475,6 +480,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40f) && sWarEffort->IsBellowPercentGathered(material, team, 0.60f))
                 {
+                    LOG_INFO("server.server", "WarEffort: Started stage 2 - Alliance - Herbs");
                     sWarEffort->RemoveNearbyObject(GO_HERBS_ALLIANCE_TIER_1, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_2, 50.0f))
@@ -485,6 +491,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60f) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
                 {
+                    LOG_INFO("server.server", "WarEffort: Started stage 3 - Alliance - Herbs");
                     sWarEffort->RemoveNearbyObject(GO_HERBS_ALLIANCE_TIER_2, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_3, 50.0f))
@@ -495,6 +502,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80f) && sWarEffort->IsBellowPercentGathered(material, team, 1.0f))
                 {
+                    LOG_INFO("server.server", "WarEffort: Started stage 4 - Alliance - Herbs");
                     sWarEffort->RemoveNearbyObject(GO_HERBS_ALLIANCE_TIER_3, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_4, 50.0f))
@@ -505,6 +513,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else
                 {
+                    LOG_INFO("server.server", "WarEffort: Started stage 5 - Alliance - Herbs");
                     sWarEffort->RemoveNearbyObject(GO_HERBS_ALLIANCE_TIER_4, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_ALLIANCE_TIER_5, 50.0f))
@@ -526,6 +535,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.20f) && sWarEffort->IsBellowPercentGathered(material, team, 0.40f))
                 {
+                    LOG_INFO("server.server", "WarEffort: Started stage 1 - Horde - Herbs");
                     sWarEffort->RemoveNearbyObject(GO_HERBS_HORDE_INITIAL, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_1, 50.0f))
@@ -536,6 +546,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.40f) && sWarEffort->IsBellowPercentGathered(material, team, 0.60f))
                 {
+                    LOG_INFO("server.server", "WarEffort: Started stage 2 - Horde - Herbs");
                     sWarEffort->RemoveNearbyObject(GO_HERBS_HORDE_TIER_1, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_2, 50.0f))
@@ -546,6 +557,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.60f) && sWarEffort->IsBellowPercentGathered(material, team, 0.80))
                 {
+                    LOG_INFO("server.server", "WarEffort: Started stage 3 - Horde - Herbs");
                     sWarEffort->RemoveNearbyObject(GO_HERBS_HORDE_TIER_2, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_3, 50.0f))
@@ -556,6 +568,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else if (!sWarEffort->IsBellowPercentGathered(material, team, 0.80) && sWarEffort->IsBellowPercentGathered(material, team, 1.0f))
                 {
+                    LOG_INFO("server.server", "WarEffort: Started stage 4 - Horde - Herbs");
                     sWarEffort->RemoveNearbyObject(GO_HERBS_HORDE_TIER_3, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_4, 50.0f))
@@ -566,6 +579,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
                 }
                 else
                 {
+                    LOG_INFO("server.server", "WarEffort: Started stage 5 - Horde - Herbs");
                     sWarEffort->RemoveNearbyObject(GO_HERBS_HORDE_TIER_4, unit);
 
                     if (!unit->FindNearestGameObject(GO_HERBS_HORDE_TIER_5, 50.0f))
@@ -819,60 +833,6 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
             break;
     }
 };
-
-uint32 WarEffort::GetAccumulatedMaterials(uint8 material, uint8 team)
-{
-    switch (material)
-    {
-        case MATERIAL_CAT_BANDAGES:
-            if (team == TEAM_ALLIANCE)
-            {
-                return sWarEffort->materialsAlliance[MATERIAL_LINEN] + sWarEffort->materialsAlliance[MATERIAL_SILK] + sWarEffort->materialsAlliance[MATERIAL_RUNECLOTH_A];
-            }
-            else
-            {
-                return sWarEffort->materialsHorde[MATERIAL_WOOL] + sWarEffort->materialsHorde[MATERIAL_MAGEWEAVE] + sWarEffort->materialsHorde[MATERIAL_RUNECLOTH_B];
-            }
-        case MATERIAL_CAT_FOOD:
-            if (team == TEAM_ALLIANCE)
-            {
-                return sWarEffort->materialsAlliance[MATERIAL_ALBACORE] + sWarEffort->materialsAlliance[MATERIAL_RAPTOR] + sWarEffort->materialsAlliance[MATERIAL_YELLOWTAIL_A];
-            }
-            else
-            {
-                return sWarEffort->materialsHorde[MATERIAL_WOLF] + sWarEffort->materialsHorde[MATERIAL_SALMON] + sWarEffort->materialsHorde[MATERIAL_YELLOWTAIL_H];
-            }
-        case MATERIAL_CAT_HERBS:
-            if (team == TEAM_ALLIANCE)
-            {
-                return sWarEffort->materialsAlliance[MATERIAL_STRANGLEKELP] + sWarEffort->materialsAlliance[MATERIAL_ARTHAS_TEARS] + sWarEffort->materialsAlliance[MATERIAL_PURPLE_LOTUS_A];
-            }
-            else
-            {
-                return sWarEffort->materialsHorde[MATERIAL_PEACEBLOOM] + sWarEffort->materialsHorde[MATERIAL_FIREBLOOM] + sWarEffort->materialsHorde[MATERIAL_PURPLE_LOTUS_H];
-            }
-        case MATERIAL_CAT_METAL:
-            if (team == TEAM_ALLIANCE)
-            {
-                return sWarEffort->materialsAlliance[MATERIAL_IRON] + sWarEffort->materialsAlliance[MATERIAL_THORIUM] + sWarEffort->materialsAlliance[MATERIAL_COOPER_A];
-            }
-            else
-            {
-                return sWarEffort->materialsHorde[MATERIAL_TIN] + sWarEffort->materialsHorde[MATERIAL_MITHRIL] + sWarEffort->materialsHorde[MATERIAL_COOPER_H];
-            }
-        case MATERIAL_CAT_LEATHER:
-            if (team == TEAM_ALLIANCE)
-            {
-                return sWarEffort->materialsAlliance[MATERIAL_LIGHT_LEATHER] + sWarEffort->materialsAlliance[MATERIAL_MEDIUM_LEATHER] + sWarEffort->materialsAlliance[MATERIAL_THICK_LEATHER_A];
-            }
-            else
-            {
-                return sWarEffort->materialsHorde[MATERIAL_HEAVY_LEATHER] + sWarEffort->materialsHorde[MATERIAL_RUGGER_LEATHER] + sWarEffort->materialsHorde[MATERIAL_THICK_LEATHER_B];
-            }
-    }
-
-    return 0;
-}
 
 std::string WarEffort::PrintOutMaterialCount(uint8 team)
 {
