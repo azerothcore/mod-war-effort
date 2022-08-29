@@ -1018,7 +1018,7 @@ WhisperData const whisperData[MAX_MATERIAL_CATS] =
         "Bandages? Why, do you intend to survive long enough to need them? Har! Very well, $R, I will tell you. Of the %u wool bandages needed, we have collected %u. Also to date, we have taken in %u out of %u mageweave bandages, and %u of %u runecloth bandages asked for."
     },
     {
-        "On the cooked goods front it would appear that we've managed to collect and store away %u rainbow fin albacore, out of %u requested. Additionally, right now we have in %u of %u roast raptor and %u out of %u spotted yellowtail in cold storage."
+        "On the cooked goods front it would appear that we've managed to collect and store away %u rainbow fin albacore, out of %u requested. Additionally, right now we have in %u of %u roast raptor and %u out of %u spotted yellowtail in cold storage.",
         "Food, now there's a subject I can sink my fangs into! I am told that we have %u of %u lean wolf steaks, %u out of %u spotted yellowtail, and %u of %u baked salmon on ice and stored away."
     }
 };

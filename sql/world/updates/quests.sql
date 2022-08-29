@@ -101,10 +101,10 @@ UPDATE `creature_template_addon` SET `path_id` = @PATH WHERE `entry` = @NPC;
 UPDATE `creature` SET `MovementType` = 2, `currentwaypoint` = 1 WHERE `id1` = @NPC;
 
 DELETE FROM `gossip_menu` WHERE `MenuID` = 61050 AND `TextID` = 8092;
-DELETE FROM `gossip_menu` WHERE `MenuID` = 61051 AND `TextID` = 8072;
+DELETE FROM `gossip_menu` WHERE `MenuID` = 61051 AND `TextID` = 8082;
 INSERT INTO `gossip_menu` (`MenuID`, `TextID`) VALUES
 (61050, 8092),
-(61051, 8072);
+(61051, 8082);
 
 UPDATE `creature_template` SET `gossip_menu_id` = 61050 WHERE `entry` = 15700;
 UPDATE `creature_template` SET `gossip_menu_id` = 61051 WHERE `entry` = 15701;
