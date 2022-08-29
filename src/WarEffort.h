@@ -30,7 +30,8 @@ enum MaterialCategory
     MATERIAL_CAT_FOOD,
     MATERIAL_CAT_HERBS,
     MATERIAL_CAT_METAL,
-    MATERIAL_CAT_LEATHER
+    MATERIAL_CAT_LEATHER,
+    MAX_MATERIAL_CATS
 };
 
 enum MaterialsAlliance

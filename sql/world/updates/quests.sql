@@ -34,8 +34,6 @@ INSERT INTO `creature` (`guid`, `id1`, `id2`, `id3`, `map`, `zoneId`, `areaId`, 
 (3115466,15534,0,0,1,0,0,1,1,1,1642.74,-4089.04,36.6118,3.70578,300,0,0,14355,0,0,0,0,0,'',0),
 (3115465,15535,0,0,1,0,0,1,1,1,1634.37,-4087.58,36.2655,5.29543,300,0,0,15260,0,0,0,0,0,'',0);
 
-UPDATE `quest_template_addon` SET `SpecialFlags` = `SpecialFlags`|1 WHERE `id` IN (8518, 8521, 8605, 8608, 8523, 8609, 8525, 8527, 8612, 8616, 8529, 8614, 8504, 8510, 8550, 8581, 8506, 8583, 8493, 8533, 8512, 8514, 8589, 8600, 8516, 8591);
-
 -- Horde commendation npcs
 DELETE FROM `creature` WHERE `id1` IN (21968, 15738, 15737, 15739, 15736);
 INSERT INTO `creature` (`guid`, `id1`, `id2`, `id3`, `map`, `zoneId`, `areaId`, `spawnMask`, `phaseMask`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `wander_distance`, `currentwaypoint`, `curhealth`, `curmana`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`, `ScriptName`, `VerifiedBuild`) VALUES
@@ -58,92 +56,6 @@ DELETE FROM `creature` WHERE `id1` IN (15700, 15701);
 INSERT INTO `creature` (`guid`, `id1`, `id2`, `id3`, `map`, `zoneId`, `areaId`, `spawnMask`, `phaseMask`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `wander_distance`, `currentwaypoint`, `curhealth`, `curmana`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`, `ScriptName`, `VerifiedBuild`) VALUES
 (3115499,15701,0,0,0,0,0,1,1,1,-4961.68,-1243.19,501.672,2.46488,300,0,0,30520,0,0,0,134254592,0,'',0),
 (3115502,15700,0,0,1,0,0,1,1,1,1581.39,-4202.27,41.8233,4.96133,300,0,1,30520,0,2,0,134217728,0,'',0);
-
-DELETE FROM `creature_queststarter` WHERE `quest` IN (8814, 8825, 8818, 8822, 8842, 8813, 8821, 8812, 8820, 8811, 8819, 8815, 8823, 8814, 8822, 8816, 8824, 8817, 8826, 10693, 10698, 10699, 10700)  AND `id` IN (21968, 15738, 15737, 15739, 15736, 15731, 15733, 15735, 15734, 21969);
-INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES
-(15735, 8814), -- Human
-(15735, 8822),
-(15734, 8813), -- Dwarf
-(15734, 8821),
-(15733, 8812), -- Gnome
-(15733, 8820),
-(15731, 8811), -- Nelf
-(15731, 8819),
-(15736, 8815), -- Orc
-(15736, 8823),
-(15739, 8818), -- tauren
-(15739, 8825),
-(15737, 8816), -- troll
-(15737, 8824),
-(15738, 8842), -- Undead
-(15738, 8826),
-(21968, 10693), -- Belf
-(21968, 10698),
-(21969, 10699), -- Draenei
-(21969, 10700);
-
-DELETE FROM `creature_questender` WHERE `quest` IN (8814, 8825, 8818, 8822, 8842, 8813, 8821, 8812, 8820, 8811, 8819, 8815, 8823, 8814, 8822, 8816, 8824, 8817, 8826, 10693, 10698, 10699, 10700)  AND `id` IN (21968, 15738, 15737, 15739, 15736, 15731, 15733, 15735, 15734, 21969);
-INSERT INTO `creature_questender` (`id`, `quest`) VALUES
-(15735, 8814), -- Human
-(15735, 8822),
-(15734, 8813), -- Dwarf
-(15734, 8821),
-(15733, 8812), -- Gnome
-(15733, 8820),
-(15731, 8811), -- Nelf
-(15731, 8819),
-(15736, 8815), -- Orc
-(15736, 8823),
-(15739, 8818), -- tauren
-(15739, 8825),
-(15737, 8816), -- troll
-(15737, 8824),
-(15738, 8842), -- Undead
-(15738, 8826),
-(21968, 10693), -- Belf
-(21968, 10698),
-(21969, 10699), -- Draenei
-(21969, 10700);
-
-UPDATE `creature_template` SET `npcflag` = `npcflag`|2 WHERE `entry` IN (15731, 15733, 15735, 15734, 21969);
-UPDATE `creature_template` SET `npcflag` = `npcflag`|2 WHERE `entry` IN (15736, 15737, 15738, 15739, 21968);
-
--- Warlord Grohuk / Field Marshall Snowfall
-UPDATE `creature_template` SET `npcflag` = `npcflag`|1|2 WHERE `entry` IN (15700, 15701); 
-
-DELETE FROM `creature_queststarter` WHERE `id` = 15701 AND `quest` IN (8846, 8847, 8848, 8849, 8850);
-INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES
-(15701, 8846),
-(15701, 8847),
-(15701, 8848),
-(15701, 8849),
-(15701, 8850);
-
-DELETE FROM `creature_queststarter` WHERE `id` = 15700 AND `quest` IN (8851, 8852, 8853, 8854, 8855);
-INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES
-(15700, 8851),
-(15700, 8852),
-(15700, 8853),
-(15700, 8854),
-(15700, 8855);
-
-DELETE FROM `creature_questender` WHERE `id` = 15701 AND `quest` IN (8846, 8847, 8848, 8849, 8850);
-INSERT INTO `creature_questender` (`id`, `quest`) VALUES
-(15701, 8846),
-(15701, 8847),
-(15701, 8848),
-(15701, 8849),
-(15701, 8850);
-
-DELETE FROM `creature_questender` WHERE `id` = 15700 AND `quest` IN (8851, 8852, 8853, 8854, 8855);
-INSERT INTO `creature_questender` (`id`, `quest`) VALUES
-(15700, 8851),
-(15700, 8852),
-(15700, 8853),
-(15700, 8854),
-(15700, 8855);
-
-UPDATE `quest_template_addon` SET `SpecialFlags` = `SpecialFlags`|1 WHERE `id` IN (8846, 8847, 8848, 8849, 8850, 8851, 8852, 8853, 8854, 8855);
 
 SET @NPC := 15701;
 SET @PATH := @NPC * 10;
@@ -188,9 +100,29 @@ UPDATE `creature_template_addon` SET `path_id` = @PATH WHERE `entry` = @NPC;
 
 UPDATE `creature` SET `MovementType` = 2, `currentwaypoint` = 1 WHERE `id1` = @NPC;
 
--- Baked Salmon (H)
-DELETE FROM `creature_queststarter` WHERE `id` = 15535 AND `quest` = 8616;
-INSERT INTO `creature_queststarter` (`id`, `quest`) VALUES (15535, 8616);
+DELETE FROM `gossip_menu` WHERE `MenuID` = 61050 AND `TextID` = 8092;
+DELETE FROM `gossip_menu` WHERE `MenuID` = 61051 AND `TextID` = 8072;
+INSERT INTO `gossip_menu` (`MenuID`, `TextID`) VALUES
+(61050, 8092),
+(61051, 8072);
 
-DELETE FROM `creature_questender` WHERE `id` = 15535 AND `quest` = 8616;
-INSERT INTO `creature_questender` (`id`, `quest`) VALUES (15535, 8616);
+UPDATE `creature_template` SET `gossip_menu_id` = 61050 WHERE `entry` = 15700;
+UPDATE `creature_template` SET `gossip_menu_id` = 61051 WHERE `entry` = 15701;
+
+DELETE FROM `gossip_menu_option` WHERE `MenuID` = 61050 AND `OptionID` IN (0, 1, 2, 3, 4);
+INSERT INTO `gossip_menu_option` (`MenuID`, `OptionID`, `OptionIcon`, `OptionText`, `OptionBroadcastTextID`, `OptionType`, `OptionNpcFlag`, `ActionMenuID`, `ActionPoiID`, `BoxCoded`, `BoxMoney`, `BoxText`, `BoxBroadcastTextID`, `VerifiedBuild`) VALUES
+(61050, 0, 0, 'How many metal bars have the Horde collected so far?', 0, 1, 2, 0, 0, 0, 0, '', 0, 0),
+(61050, 1, 0, 'How many herbs have the Horde collected so far?', 0, 1, 2, 0, 0, 0, 0, '', 0, 0),
+(61050, 2, 0, 'How many leather skins have the Horde collected so far?', 0, 1, 2, 0, 0, 0, 0, '', 0, 0),
+(61050, 3, 0, 'How many bandages have the Horde collected so far?', 0, 1, 2, 0, 0, 0, 0, '', 0, 0),
+(61050, 4, 0, 'How many cooked goods have the Horde collected so far?', 0, 1, 2, 0, 0, 0, 0, '', 0, 0);
+
+DELETE FROM `gossip_menu_option` WHERE `MenuID` = 61050 AND `OptionID` IN (0, 1, 2, 3, 4);
+INSERT INTO `gossip_menu_option` (`MenuID`, `OptionID`, `OptionIcon`, `OptionText`, `OptionBroadcastTextID`, `OptionType`, `OptionNpcFlag`, `ActionMenuID`, `ActionPoiID`, `BoxCoded`, `BoxMoney`, `BoxText`, `BoxBroadcastTextID`, `VerifiedBuild`) VALUES
+(61051, 0, 0, 'How many metal bars have the Alliance collected so far?', 0, 1, 2, 0, 0, 0, 0, '', 0, 0),
+(61051, 1, 0, 'How many herbs have the Alliance collected so far?', 0, 1, 2, 0, 0, 0, 0, '', 0, 0),
+(61051, 2, 0, 'How many leather skins have the Alliance collected so far?', 0, 1, 2, 0, 0, 0, 0, '', 0, 0),
+(61051, 3, 0, 'How many bandages have the Alliance collected so far?', 0, 1, 2, 0, 0, 0, 0, '', 0, 0),
+(61051, 4, 0, 'How many cooked goods have the Alliance collected so far?', 0, 1, 2, 0, 0, 0, 0, '', 0, 0);
+
+UPDATE `creature_template` SET `ScriptName` = 'npc_mod_war_effort_quartermaster' WHERE `entry` IN (15700, 15701);

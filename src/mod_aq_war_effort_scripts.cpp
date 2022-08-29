@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Chat.h"
 #include "Config.h"
+#include "ScriptedCreature.h"
 #include "TaskScheduler.h"
 #include "WarEffort.h"
 
@@ -983,9 +984,136 @@ private:
     TaskScheduler _scheduler;
 };
 
+enum WarEffortQuartermasters
+{
+    GOSSIP_SHOW_METAL,
+    GOSSIP_SHOW_HERBS,
+    GOSSIP_SHOW_LEATHER,
+    GOSSIP_SHOW_BANDAGES,
+    GOSSIP_SHOW_FOOD
+};
+
+struct WhisperData
+{
+    std::string TextA;
+    std::string TextH;
+};
+
+WhisperData const whisperData[MAX_MATERIAL_CATS] =
+{
+    {
+        "Good question, $C. Last I was informed; we have managed to collect %u copper bars out of %u needed. Additionally, I am told that we have %u iron bars out %u, and %u out of %u thorium bars requested.",
+        "Of the %u copper bars that we'll need, we have %u. The number for tin bar collection sits at %u out of %u needed. And, there have been %u of %u mithril bars smelted for the cause."
+    },
+    {
+        "Herbs, herbs, hmmm, let me see here. Ah yes, here it is. To date we have accumulated %u out of %u stranglekelp, %u out of %u purple lotuses, and %u out of %u arthas' tears needed.",
+        "I just received word on that. We currently have %u out of %u peacebloom, %u of %u firebloom, and %u out of %u purple lotus herbs requested."
+    },
+    {
+        "I received an update on that just a moment ago. It looks like out of %u light leather needed, we have %u. As for the others, the report indicates that we've gathered %u out of %u medium leather, and %u out of our %u thick leather quota.",
+        "Give me a moment; there are a lot of numbers to remember here. It looks like we have %u of %u heavy leather skins collected. As well, we have %u out of %u thick leather, and %u of %u rugged leather stockpiled."
+    },
+    {
+        "Collection of bandages is proceeding according to schedule. As far as linen bandages are concerned, we've gathered %u of %u. Silk bandages have been tallied at %u out of %u, and we have %u out of %u runecloth bandages needed.",
+        "Bandages? Why, do you intend to survive long enough to need them? Har! Very well, $R, I will tell you. Of the %u wool bandages needed, we have collected %u. Also to date, we have taken in %u out of %u mageweave bandages, and %u of %u runecloth bandages asked for."
+    },
+    {
+        "On the cooked goods front it would appear that we've managed to collect and store away %u rainbow fin albacore, out of %u requested. Additionally, right now we have in %u of %u roast raptor and %u out of %u spotted yellowtail in cold storage."
+        "Food, now there's a subject I can sink my fangs into! I am told that we have %u of %u lean wolf steaks, %u out of %u spotted yellowtail, and %u of %u baked salmon on ice and stored away."
+    }
+};
+
+struct npc_mod_war_effort_quartermaster : public ScriptedAI
+{
+    npc_mod_war_effort_quartermaster(Creature* creature) : ScriptedAI(creature) { }
+
+    void sGossipSelect(Player* player, uint32 menuId, uint32 gossipListId) override
+    {
+        std::string text = "Nothing to report.";
+
+        switch (gossipListId)
+        {
+            case GOSSIP_SHOW_METAL:
+                if (player->GetTeamId() == TEAM_ALLIANCE)
+                {
+                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_COOPER_A], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_COOPER_A].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_IRON], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_IRON].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_THORIUM], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_THORIUM].Goal);
+                }
+                else
+                {
+                    text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->WarEffortMaterialsHorde[MATERIAL_COOPER_H].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_COOPER_H], sWarEffort->materialsHorde[MATERIAL_TIN], sWarEffort->WarEffortMaterialsHorde[MATERIAL_TIN].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_MITHRIL], sWarEffort->WarEffortMaterialsHorde[MATERIAL_MITHRIL].Goal);
+                }
+                break;
+            case GOSSIP_SHOW_HERBS:
+                if (player->GetTeamId() == TEAM_ALLIANCE)
+                {
+                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_STRANGLEKELP], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_STRANGLEKELP].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_PURPLE_LOTUS_A], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_PURPLE_LOTUS_A].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_ARTHAS_TEARS], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_ARTHAS_TEARS].Goal);
+                }
+                else
+                {
+                    text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->materialsHorde[MATERIAL_PEACEBLOOM], sWarEffort->WarEffortMaterialsHorde[MATERIAL_PEACEBLOOM].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_FIREBLOOM], sWarEffort->WarEffortMaterialsHorde[MATERIAL_FIREBLOOM].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_PURPLE_LOTUS_H], sWarEffort->WarEffortMaterialsHorde[MATERIAL_PURPLE_LOTUS_H].Goal);
+                }
+                break;
+            case GOSSIP_SHOW_LEATHER:
+                if (player->GetTeamId() == TEAM_ALLIANCE)
+                {
+                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_LIGHT_LEATHER], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_LIGHT_LEATHER].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_MEDIUM_LEATHER], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_MEDIUM_LEATHER].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_THICK_LEATHER_A], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_THICK_LEATHER_A].Goal);
+                }
+                else
+                {
+                    text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->materialsHorde[MATERIAL_HEAVY_LEATHER], sWarEffort->WarEffortMaterialsHorde[MATERIAL_HEAVY_LEATHER].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_THICK_LEATHER_B], sWarEffort->WarEffortMaterialsHorde[MATERIAL_THICK_LEATHER_B].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_RUGGER_LEATHER], sWarEffort->WarEffortMaterialsHorde[MATERIAL_RUGGER_LEATHER].Goal);
+                }
+                break;
+            case GOSSIP_SHOW_BANDAGES:
+                if (player->GetTeamId() == TEAM_ALLIANCE)
+                {
+                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_LINEN], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_LINEN].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_SILK], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_SILK].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_RUNECLOTH_A], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_RUNECLOTH_A].Goal);
+                }
+                else
+                {
+                    text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->WarEffortMaterialsHorde[MATERIAL_WOOL].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_WOOL], sWarEffort->materialsHorde[MATERIAL_MAGEWEAVE], sWarEffort->WarEffortMaterialsHorde[MATERIAL_MAGEWEAVE].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_RUNECLOTH_B], sWarEffort->WarEffortMaterialsHorde[MATERIAL_RUNECLOTH_B].Goal);
+                }
+                break;
+            case GOSSIP_SHOW_FOOD:
+                if (player->GetTeamId() == TEAM_ALLIANCE)
+                {
+                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_ALBACORE], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_ALBACORE].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_RAPTOR], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_RAPTOR].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_YELLOWTAIL_A], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_YELLOWTAIL_A].Goal);
+                }
+                else
+                {
+                    text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->materialsHorde[MATERIAL_WOLF], sWarEffort->WarEffortMaterialsHorde[MATERIAL_WOLF].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_YELLOWTAIL_H], sWarEffort->WarEffortMaterialsHorde[MATERIAL_YELLOWTAIL_H].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_SALMON], sWarEffort->WarEffortMaterialsHorde[MATERIAL_SALMON].Goal);
+                }
+                break;
+        }
+
+        me->Whisper(text, LANG_UNIVERSAL, player);
+        CloseGossipMenuFor(player);
+    }
+};
+
 // Add all scripts in one
 void ModAQWarEffortPlayerScripts()
 {
     new ModAQWarEffortPlayerScript();
     new ModWarEffortWorldScript();
+    RegisterCreatureAI(npc_mod_war_effort_quartermaster);
 }
