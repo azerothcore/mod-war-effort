@@ -1110,10 +1110,38 @@ struct npc_mod_war_effort_quartermaster : public ScriptedAI
     }
 };
 
+class unit_wareffort_script : public UnitScript
+{
+public:
+    unit_wareffort_script() : UnitScript("unit_wareffort_script") { }
+
+    void OnUnitDeath(Unit* me, Unit* killer) override
+    {
+        if (sWarEffort->IsEnabled())
+        {
+            if (me->GetEntry() == 12017)
+            {
+                if (InstanceScript* script = me->GetInstanceScript())
+                {
+                    me->GetMap()->DoForAllPlayers([&](Player* player)
+                    {
+                        if (player->GetQuestStatus(8288) == QUEST_STATUS_INCOMPLETE)
+                        {
+                            player->AddItem(20383, 1);
+                        }
+                    });
+                }
+            }
+        }
+    }
+};
+
+
 // Add all scripts in one
 void ModAQWarEffortPlayerScripts()
 {
     new ModAQWarEffortPlayerScript();
     new ModWarEffortWorldScript();
+    new unit_wareffort_script();
     RegisterCreatureAI(npc_mod_war_effort_quartermaster);
 }
