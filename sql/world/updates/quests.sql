@@ -117,7 +117,7 @@ INSERT INTO `gossip_menu_option` (`MenuID`, `OptionID`, `OptionIcon`, `OptionTex
 (61050, 3, 0, 'How many bandages have the Horde collected so far?', 0, 1, 2, 0, 0, 0, 0, '', 0, 0),
 (61050, 4, 0, 'How many cooked goods have the Horde collected so far?', 0, 1, 2, 0, 0, 0, 0, '', 0, 0);
 
-DELETE FROM `gossip_menu_option` WHERE `MenuID` = 61050 AND `OptionID` IN (0, 1, 2, 3, 4);
+DELETE FROM `gossip_menu_option` WHERE `MenuID` = 61051 AND `OptionID` IN (0, 1, 2, 3, 4);
 INSERT INTO `gossip_menu_option` (`MenuID`, `OptionID`, `OptionIcon`, `OptionText`, `OptionBroadcastTextID`, `OptionType`, `OptionNpcFlag`, `ActionMenuID`, `ActionPoiID`, `BoxCoded`, `BoxMoney`, `BoxText`, `BoxBroadcastTextID`, `VerifiedBuild`) VALUES
 (61051, 0, 0, 'How many metal bars have the Alliance collected so far?', 0, 1, 2, 0, 0, 0, 0, '', 0, 0),
 (61051, 1, 0, 'How many herbs have the Alliance collected so far?', 0, 1, 2, 0, 0, 0, 0, '', 0, 0),
