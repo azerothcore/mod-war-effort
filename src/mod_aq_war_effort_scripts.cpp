@@ -849,7 +849,7 @@ std::string WarEffort::PrintOutMaterialCount(uint8 team)
             {
                 if (ItemTemplate const* item = sObjectMgr->GetItemTemplate(quest->RequiredItemId[0]))
                 {
-                    output.append(item->Name1 + " (" + Acore::ToString(materialsAlliance[data.Material]) + ")\n");
+                    output.append(item->Name1 + " (" + Acore::ToString(materialsAlliance[data.Material] * data.Multiplier) + ") Goal:" + Acore::ToString(data.Goal) + "\n");
                 }
             }
         }
@@ -862,7 +862,7 @@ std::string WarEffort::PrintOutMaterialCount(uint8 team)
             {
                 if (ItemTemplate const* item = sObjectMgr->GetItemTemplate(quest->RequiredItemId[0]))
                 {
-                    output.append(item->Name1 + " (" + Acore::ToString(materialsHorde[data.Material]) + ")\n");
+                    output.append(item->Name1 + " (" + Acore::ToString(materialsHorde[data.Material] * data.Multiplier) + ") Goal:" + Acore::ToString(data.Goal) + "\n");
                 }
             }
         }
@@ -1036,71 +1036,71 @@ struct npc_mod_war_effort_quartermaster : public ScriptedAI
             case GOSSIP_SHOW_METAL:
                 if (player->GetTeamId() == TEAM_ALLIANCE)
                 {
-                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_COOPER_A], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_COOPER_A].Goal,
-                        sWarEffort->materialsAlliance[MATERIAL_IRON], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_IRON].Goal,
-                        sWarEffort->materialsAlliance[MATERIAL_THORIUM], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_THORIUM].Goal);
+                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_COOPER_A] * 20, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_COOPER_A].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_IRON] * 20, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_IRON].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_THORIUM] * 20, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_THORIUM].Goal);
                 }
                 else
                 {
                     text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->WarEffortMaterialsHorde[MATERIAL_COOPER_H].Goal,
-                        sWarEffort->materialsHorde[MATERIAL_COOPER_H], sWarEffort->materialsHorde[MATERIAL_TIN], sWarEffort->WarEffortMaterialsHorde[MATERIAL_TIN].Goal,
-                        sWarEffort->materialsHorde[MATERIAL_MITHRIL], sWarEffort->WarEffortMaterialsHorde[MATERIAL_MITHRIL].Goal);
+                        sWarEffort->materialsHorde[MATERIAL_COOPER_H] * 20, sWarEffort->materialsHorde[MATERIAL_TIN] * 20, sWarEffort->WarEffortMaterialsHorde[MATERIAL_TIN].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_MITHRIL] * 20, sWarEffort->WarEffortMaterialsHorde[MATERIAL_MITHRIL].Goal);
                 }
                 break;
             case GOSSIP_SHOW_HERBS:
                 if (player->GetTeamId() == TEAM_ALLIANCE)
                 {
-                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_STRANGLEKELP], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_STRANGLEKELP].Goal,
-                        sWarEffort->materialsAlliance[MATERIAL_PURPLE_LOTUS_A], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_PURPLE_LOTUS_A].Goal,
-                        sWarEffort->materialsAlliance[MATERIAL_ARTHAS_TEARS], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_ARTHAS_TEARS].Goal);
+                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_STRANGLEKELP] * 20, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_STRANGLEKELP].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_PURPLE_LOTUS_A] * 20, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_PURPLE_LOTUS_A].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_ARTHAS_TEARS] * 20, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_ARTHAS_TEARS].Goal);
                 }
                 else
                 {
-                    text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->materialsHorde[MATERIAL_PEACEBLOOM], sWarEffort->WarEffortMaterialsHorde[MATERIAL_PEACEBLOOM].Goal,
-                        sWarEffort->materialsHorde[MATERIAL_FIREBLOOM], sWarEffort->WarEffortMaterialsHorde[MATERIAL_FIREBLOOM].Goal,
-                        sWarEffort->materialsHorde[MATERIAL_PURPLE_LOTUS_H], sWarEffort->WarEffortMaterialsHorde[MATERIAL_PURPLE_LOTUS_H].Goal);
+                    text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->materialsHorde[MATERIAL_PEACEBLOOM] * 20, sWarEffort->WarEffortMaterialsHorde[MATERIAL_PEACEBLOOM].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_FIREBLOOM] * 20, sWarEffort->WarEffortMaterialsHorde[MATERIAL_FIREBLOOM].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_PURPLE_LOTUS_H] * 20, sWarEffort->WarEffortMaterialsHorde[MATERIAL_PURPLE_LOTUS_H].Goal);
                 }
                 break;
             case GOSSIP_SHOW_LEATHER:
                 if (player->GetTeamId() == TEAM_ALLIANCE)
                 {
-                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_LIGHT_LEATHER], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_LIGHT_LEATHER].Goal,
-                        sWarEffort->materialsAlliance[MATERIAL_MEDIUM_LEATHER], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_MEDIUM_LEATHER].Goal,
-                        sWarEffort->materialsAlliance[MATERIAL_THICK_LEATHER_A], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_THICK_LEATHER_A].Goal);
+                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_LIGHT_LEATHER] * 10, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_LIGHT_LEATHER].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_MEDIUM_LEATHER] * 10, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_MEDIUM_LEATHER].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_THICK_LEATHER_A] * 10, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_THICK_LEATHER_A].Goal);
                 }
                 else
                 {
-                    text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->materialsHorde[MATERIAL_HEAVY_LEATHER], sWarEffort->WarEffortMaterialsHorde[MATERIAL_HEAVY_LEATHER].Goal,
-                        sWarEffort->materialsHorde[MATERIAL_THICK_LEATHER_B], sWarEffort->WarEffortMaterialsHorde[MATERIAL_THICK_LEATHER_B].Goal,
-                        sWarEffort->materialsHorde[MATERIAL_RUGGER_LEATHER], sWarEffort->WarEffortMaterialsHorde[MATERIAL_RUGGER_LEATHER].Goal);
+                    text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->materialsHorde[MATERIAL_HEAVY_LEATHER] * 10, sWarEffort->WarEffortMaterialsHorde[MATERIAL_HEAVY_LEATHER].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_THICK_LEATHER_B] * 10, sWarEffort->WarEffortMaterialsHorde[MATERIAL_THICK_LEATHER_B].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_RUGGER_LEATHER] * 10, sWarEffort->WarEffortMaterialsHorde[MATERIAL_RUGGER_LEATHER].Goal);
                 }
                 break;
             case GOSSIP_SHOW_BANDAGES:
                 if (player->GetTeamId() == TEAM_ALLIANCE)
                 {
-                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_LINEN], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_LINEN].Goal,
-                        sWarEffort->materialsAlliance[MATERIAL_SILK], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_SILK].Goal,
-                        sWarEffort->materialsAlliance[MATERIAL_RUNECLOTH_A], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_RUNECLOTH_A].Goal);
+                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_LINEN] * 20, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_LINEN].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_SILK] * 20, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_SILK].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_RUNECLOTH_A] * 20, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_RUNECLOTH_A].Goal);
                 }
                 else
                 {
                     text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->WarEffortMaterialsHorde[MATERIAL_WOOL].Goal,
-                        sWarEffort->materialsHorde[MATERIAL_WOOL], sWarEffort->materialsHorde[MATERIAL_MAGEWEAVE], sWarEffort->WarEffortMaterialsHorde[MATERIAL_MAGEWEAVE].Goal,
-                        sWarEffort->materialsHorde[MATERIAL_RUNECLOTH_B], sWarEffort->WarEffortMaterialsHorde[MATERIAL_RUNECLOTH_B].Goal);
+                        sWarEffort->materialsHorde[MATERIAL_WOOL] * 20, sWarEffort->materialsHorde[MATERIAL_MAGEWEAVE] * 20, sWarEffort->WarEffortMaterialsHorde[MATERIAL_MAGEWEAVE].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_RUNECLOTH_B] * 20, sWarEffort->WarEffortMaterialsHorde[MATERIAL_RUNECLOTH_B].Goal);
                 }
                 break;
             case GOSSIP_SHOW_FOOD:
                 if (player->GetTeamId() == TEAM_ALLIANCE)
                 {
                     text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_ALBACORE], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_ALBACORE].Goal,
-                        sWarEffort->materialsAlliance[MATERIAL_RAPTOR], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_RAPTOR].Goal,
-                        sWarEffort->materialsAlliance[MATERIAL_YELLOWTAIL_A], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_YELLOWTAIL_A].Goal);
+                        sWarEffort->materialsAlliance[MATERIAL_RAPTOR] * 20, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_RAPTOR].Goal,
+                        sWarEffort->materialsAlliance[MATERIAL_YELLOWTAIL_A] * 20, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_YELLOWTAIL_A].Goal);
                 }
                 else
                 {
-                    text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->materialsHorde[MATERIAL_WOLF], sWarEffort->WarEffortMaterialsHorde[MATERIAL_WOLF].Goal,
-                        sWarEffort->materialsHorde[MATERIAL_YELLOWTAIL_H], sWarEffort->WarEffortMaterialsHorde[MATERIAL_YELLOWTAIL_H].Goal,
-                        sWarEffort->materialsHorde[MATERIAL_SALMON], sWarEffort->WarEffortMaterialsHorde[MATERIAL_SALMON].Goal);
+                    text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->materialsHorde[MATERIAL_WOLF] * 20, sWarEffort->WarEffortMaterialsHorde[MATERIAL_WOLF].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_YELLOWTAIL_H] * 20, sWarEffort->WarEffortMaterialsHorde[MATERIAL_YELLOWTAIL_H].Goal,
+                        sWarEffort->materialsHorde[MATERIAL_SALMON] * 20, sWarEffort->WarEffortMaterialsHorde[MATERIAL_SALMON].Goal);
                 }
                 break;
         }
@@ -1136,6 +1136,35 @@ public:
     }
 };
 
+using namespace Acore::ChatCommands;
+
+class wareffort_commandscript : public CommandScript
+{
+public:
+    wareffort_commandscript() : CommandScript("wareffort_commandscript") { }
+
+    ChatCommandTable GetCommands() const override
+    {
+        static ChatCommandTable wareffortTable =
+        {
+            { "scores", HandleWareffortShowScores, SEC_MODERATOR, Console::Yes },
+        };
+
+        static ChatCommandTable commandTable =
+        {
+            { "wareffort", wareffortTable },
+        };
+
+        return commandTable;
+    }
+
+    static bool HandleWareffortShowScores(ChatHandler* handler)
+    {
+        handler->SendSysMessage(sWarEffort->PrintOutMaterialCount(TEAM_ALLIANCE));
+        handler->SendSysMessage(sWarEffort->PrintOutMaterialCount(TEAM_HORDE));
+        return true;
+    }
+};
 
 // Add all scripts in one
 void ModAQWarEffortPlayerScripts()
@@ -1144,4 +1173,5 @@ void ModAQWarEffortPlayerScripts()
     new ModWarEffortWorldScript();
     new unit_wareffort_script();
     RegisterCreatureAI(npc_mod_war_effort_quartermaster);
+    new wareffort_commandscript();
 }
