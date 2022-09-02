@@ -1064,13 +1064,13 @@ struct npc_mod_war_effort_quartermaster : public ScriptedAI
             case GOSSIP_SHOW_LEATHER:
                 if (player->GetTeamId() == TEAM_ALLIANCE)
                 {
-                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_LIGHT_LEATHER] * 10, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_LIGHT_LEATHER].Goal,
+                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_LIGHT_LEATHER].Goal, sWarEffort->materialsAlliance[MATERIAL_LIGHT_LEATHER] * 10,
                         sWarEffort->materialsAlliance[MATERIAL_MEDIUM_LEATHER] * 10, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_MEDIUM_LEATHER].Goal,
                         sWarEffort->materialsAlliance[MATERIAL_THICK_LEATHER_A] * 10, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_THICK_LEATHER_A].Goal);
                 }
                 else
                 {
-                    text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->WarEffortMaterialsHorde[MATERIAL_HEAVY_LEATHER].Goal, sWarEffort->materialsHorde[MATERIAL_HEAVY_LEATHER] * 10,
+                    text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->materialsHorde[MATERIAL_HEAVY_LEATHER] * 10, sWarEffort->WarEffortMaterialsHorde[MATERIAL_HEAVY_LEATHER].Goal,
                         sWarEffort->materialsHorde[MATERIAL_THICK_LEATHER_B] * 10, sWarEffort->WarEffortMaterialsHorde[MATERIAL_THICK_LEATHER_B].Goal,
                         sWarEffort->materialsHorde[MATERIAL_RUGGER_LEATHER] * 10, sWarEffort->WarEffortMaterialsHorde[MATERIAL_RUGGER_LEATHER].Goal);
                 }
@@ -1092,7 +1092,7 @@ struct npc_mod_war_effort_quartermaster : public ScriptedAI
             case GOSSIP_SHOW_FOOD:
                 if (player->GetTeamId() == TEAM_ALLIANCE)
                 {
-                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_ALBACORE], sWarEffort->WarEffortMaterialsAlliance[MATERIAL_ALBACORE].Goal,
+                    text = Acore::StringFormat(whisperData[gossipListId].TextA, sWarEffort->materialsAlliance[MATERIAL_ALBACORE] * 20, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_ALBACORE].Goal,
                         sWarEffort->materialsAlliance[MATERIAL_RAPTOR] * 20, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_RAPTOR].Goal,
                         sWarEffort->materialsAlliance[MATERIAL_YELLOWTAIL_A] * 20, sWarEffort->WarEffortMaterialsAlliance[MATERIAL_YELLOWTAIL_A].Goal);
                 }
