@@ -1070,7 +1070,7 @@ struct npc_mod_war_effort_quartermaster : public ScriptedAI
                 }
                 else
                 {
-                    text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->WarEffortMaterialsHorde[MATERIAL_HEAVY_LEATHER].Goal, sWarEffort->materialsHorde[MATERIAL_HEAVY_LEATHER] * 10
+                    text = Acore::StringFormat(whisperData[gossipListId].TextH, sWarEffort->WarEffortMaterialsHorde[MATERIAL_HEAVY_LEATHER].Goal, sWarEffort->materialsHorde[MATERIAL_HEAVY_LEATHER] * 10,
                         sWarEffort->materialsHorde[MATERIAL_THICK_LEATHER_B] * 10, sWarEffort->WarEffortMaterialsHorde[MATERIAL_THICK_LEATHER_B].Goal,
                         sWarEffort->materialsHorde[MATERIAL_RUGGER_LEATHER] * 10, sWarEffort->WarEffortMaterialsHorde[MATERIAL_RUGGER_LEATHER].Goal);
                 }
