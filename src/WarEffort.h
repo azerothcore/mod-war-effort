@@ -273,13 +273,13 @@ public:
     uint32 lastSave{0};
 
     [[nodiscard]] bool IsSaveNeeded() { return saveNeeded; }
-    void SetSaveStatus(bool needed) { saveNeeded = needed;
-    }
+    void SetSaveStatus(bool needed) { saveNeeded = needed; }
     [[nodiscard]] bool IsEnabled() { return sConfigMgr->GetOption<bool>("ModWarEffort.Enable", false);  }
     [[nodiscard]] uint32 GetActiveEventId() { return sConfigMgr->GetOption<uint32>("ModWarEffort.Id", 1); }
     void CheckGoal(Unit* unit, uint8 material, uint8 team);
     [[nodiscard]] uint32 GetAccumulatedMaterials(uint8 material, uint8 team);
     [[nodiscard]] bool IsBellowPercentGathered(uint8 material, uint8 team, float pct);
+    [[nodiscard]] bool IsWarEffortComplete(uint8 team);
     void RemoveNearbyObject(uint32 entry, Unit* unit);
 
     void SaveData();

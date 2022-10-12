@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Chat.h"
 #include "Config.h"
+#include "QueryResult.h"
 #include "ScriptedCreature.h"
 #include "TaskScheduler.h"
 #include "WarEffort.h"
@@ -238,6 +239,42 @@ bool WarEffort::IsBellowPercentGathered(uint8 material, uint8 team, float pct)
     }
 
     return false;
+}
+
+bool WarEffort::IsWarEffortComplete(uint8 team)
+{
+    std::vector materialCats = { MATERIAL_CAT_BANDAGES, MATERIAL_CAT_FOOD, MATERIAL_CAT_HERBS, MATERIAL_CAT_METAL, MATERIAL_CAT_LEATHER };
+    for (uint32 cat : materialCats)
+    {
+        if (team == TEAM_ALLIANCE)
+        {
+            if (IsBellowPercentGathered(cat, TEAM_ALLIANCE, 100.0f))
+            {
+                return false;
+            }
+
+        } else if (team == TEAM_HORDE)
+        {
+            if (IsBellowPercentGathered(cat, TEAM_HORDE, 100.0f))
+            {
+                return false;
+            }
+        }
+        else
+        {
+            if (IsBellowPercentGathered(cat, TEAM_ALLIANCE, 100.0f))
+            {
+                return false;
+            }
+
+            if (IsBellowPercentGathered(cat, TEAM_HORDE, 100.0f))
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
 
 void WarEffort::RemoveNearbyObject(uint32 entry, Unit* unit)
@@ -1160,8 +1197,27 @@ public:
 
     static bool HandleWareffortShowScores(ChatHandler* handler)
     {
+        handler->SendSysMessage("-- Horde Gathered Resources --");
         handler->SendSysMessage(sWarEffort->PrintOutMaterialCount(TEAM_ALLIANCE));
+
+        if (sWarEffort->IsWarEffortComplete(TEAM_ALLIANCE))
+        {
+            handler->SendSysMessage("The Alliance has gathered all the required materials!");
+        }
+
+        handler->SendSysMessage("-- Horde Gathered Resources --");
         handler->SendSysMessage(sWarEffort->PrintOutMaterialCount(TEAM_HORDE));
+
+        if (sWarEffort->IsWarEffortComplete(TEAM_HORDE))
+        {
+            handler->SendSysMessage("The Horde has gathered all the required materials!");
+        }
+
+        if (sWarEffort->IsWarEffortComplete(TEAM_NEUTRAL))
+        {
+            handler->SendSysMessage("All the required War Effort resources have been gathered. The expedition presses on to Silithus! Onwards!");
+        }
+
         return true;
     }
 };
