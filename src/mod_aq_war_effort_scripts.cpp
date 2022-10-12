@@ -1197,7 +1197,7 @@ public:
 
     static bool HandleWareffortShowScores(ChatHandler* handler)
     {
-        handler->SendSysMessage("-- Horde Gathered Resources --");
+        handler->SendSysMessage("-- Alliance Gathered Resources --");
         handler->SendSysMessage(sWarEffort->PrintOutMaterialCount(TEAM_ALLIANCE));
 
         if (sWarEffort->IsWarEffortComplete(TEAM_ALLIANCE))
