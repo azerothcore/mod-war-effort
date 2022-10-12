@@ -94,6 +94,11 @@ void WarEffort::LoadData()
             }
         } while (result->NextRow());
     }
+
+    if (IsWarEffortComplete(TEAM_NEUTRAL))
+    {
+        isComplete = true;
+    }
 };
 
 bool WarEffort::IsBellowPercentGathered(uint8 material, uint8 team, float pct)
@@ -872,6 +877,19 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
         default:
             break;
     }
+
+    if (IsWarEffortComplete(TEAM_NEUTRAL))
+    {
+        if (!isComplete)
+        {
+            if (Player* player = unit->ToPlayer())
+            {
+                ChatHandler(player->GetSession()).SendSysMessage("All the required War Effort resources have been gathered. The expedition presses on to Silithus!");
+            }
+
+            isComplete = true;
+        }
+    }
 };
 
 std::string WarEffort::PrintOutMaterialCount(uint8 team)
@@ -1215,7 +1233,7 @@ public:
 
         if (sWarEffort->IsWarEffortComplete(TEAM_NEUTRAL))
         {
-            handler->SendSysMessage("All the required War Effort resources have been gathered. The expedition presses on to Silithus! Onwards!");
+            handler->SendSysMessage("All the required War Effort resources have been gathered. The expedition presses on to Silithus!");
         }
 
         return true;

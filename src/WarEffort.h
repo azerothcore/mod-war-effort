@@ -263,7 +263,8 @@ public:
 
     static WarEffort* instance();
 
-    bool saveNeeded{false};
+    bool saveNeeded{ false };
+    bool isComplete{ false };
 
     std::string PrintOutMaterialCount(uint8 team);
 
