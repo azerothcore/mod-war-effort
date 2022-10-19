@@ -118,7 +118,9 @@ enum WarEffortQuests
     QUEST_HEAVY_LEATHER        = 8588,
     QUEST_RUGGED_LEATHER       = 8600,
     QUEST_THICK_LEATHER_A      = 8515,
-    QUEST_THICK_LEATHER_H      = 8590
+    QUEST_THICK_LEATHER_H      = 8590,
+
+    QUEST_BANG_GONG            = 8743
 };
 
 enum WarEffortGameobjectIds
@@ -189,6 +191,11 @@ enum WarEffortGameobjectIds
     GO_METAL_ALLIANCE_TIER_3  = 180782,
     GO_METAL_ALLIANCE_TIER_4  = 180783,
     GO_METAL_ALLIANCE_TIER_5  = 180784
+};
+
+enum WarEffortNpcs
+{
+    NPC_JONATHAN              = 15693
 };
 
 // Not blizzlike, not sniffed, not researched
@@ -265,6 +272,7 @@ public:
 
     bool saveNeeded{ false };
     bool isComplete{ false };
+    bool gongBanged{ false };
 
     std::string PrintOutMaterialCount(uint8 team);
 

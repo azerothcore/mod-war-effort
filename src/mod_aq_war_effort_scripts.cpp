@@ -934,6 +934,38 @@ public:
 
     void OnPlayerCompleteQuest(Player* player, Quest const* quest)
     {
+        if (quest->GetQuestId() == QUEST_BANG_GONG && !sWarEffort->gongBanged)
+        {
+            sWarEffort->gongBanged = true;
+
+            if (Creature* jon = player->FindNearestCreature(NPC_JONATHAN, 30.0f))
+            {
+                jon->AI()->Talk(0, player);
+
+                jon->m_Events.AddEventAtOffset([jon]()
+                {
+                    jon->AI()->Talk(1);
+                }, 2s);
+
+                jon->m_Events.AddEventAtOffset([jon]()
+                {
+                    jon->AI()->Talk(2);
+                }, 4s);
+
+                jon->m_Events.AddEventAtOffset([jon]()
+                {
+                    jon->AI()->Talk(3);
+                }, 6s);
+
+                jon->m_Events.AddEventAtOffset([jon]()
+                {
+                    jon->AI()->Talk(4);
+                }, 8s);
+            }
+
+            return;
+        }
+
         if (player->GetTeamId() == TEAM_ALLIANCE)
         {
             for (WarEffortData data : sWarEffort->WarEffortMaterialsAlliance)
@@ -941,7 +973,7 @@ public:
                 if (quest->GetQuestId() == data.QuestId || quest->GetQuestId() == data.QuestId + 1 /* Repeatable ones */)
                 {
                     ++sWarEffort->materialsAlliance[data.Material];
-
+                        
                     if (player->IsGameMaster())
                     {
                         ChatHandler(player->GetSession()).SendSysMessage("WarEffort: Quest turned in, updating scores.");
