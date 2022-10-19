@@ -961,6 +961,15 @@ public:
                 {
                     jon->AI()->Talk(4);
                 }, 8s);
+
+                jon->m_Events.AddEventAtOffset([jon]()
+                {
+                    if (Creature* rajaxx = jon->SummonCreature(15341, -8192.917969, 1530.618652, 4.195582, 6.252320, TEMPSUMMON_TIMED_DESPAWN, HOUR * IN_MILLISECONDS))
+                    {
+                        rajaxx->SetUnitFlag(UNIT_FLAG_IMMUNE_TO_NPC | UNIT_FLAG_IMMUNE_TO_PC | UNIT_FLAG_NON_ATTACKABLE);
+                        rajaxx->AI()->Talk(12);
+                    }
+                }, 10s);
             }
 
             return;
@@ -1206,18 +1215,29 @@ public:
     {
         if (sWarEffort->IsEnabled())
         {
-            if (me->GetEntry() == 12017)
+            switch (me->GetEntry())
             {
-                if (InstanceScript* script = me->GetInstanceScript())
-                {
-                    me->GetMap()->DoForAllPlayers([&](Player* player)
+                case 12017:
+                    if (InstanceScript* script = me->GetInstanceScript())
                     {
-                        if (player->GetQuestStatus(8288) == QUEST_STATUS_INCOMPLETE)
+                        me->GetMap()->DoForAllPlayers([&](Player* player)
                         {
-                            player->AddItem(20383, 1);
-                        }
-                    });
-                }
+                            if (player->GetQuestStatus(8288) == QUEST_STATUS_INCOMPLETE)
+                            {
+                                player->AddItem(20383, 1);
+                            }
+                        });
+                    }
+                    break;
+                case 15740: // C. of Zora
+                    me->SummonCreature(15797, -6829.171387, 817.593201, 50.999222, 0.041836, TEMPSUMMON_TIMED_DESPAWN, HOUR * IN_MILLISECONDS);
+                    break;
+                case 15741: // C. of Regal
+                    me->SummonCreature(15799, -6824.444824, 800.949890, 51.481289, 0.959970, TEMPSUMMON_TIMED_DESPAWN, HOUR * IN_MILLISECONDS);
+                    break;
+                case 15742: // C. of Ashi
+                    me->SummonCreature(15798, -6818.498535, 795.476318, 50.651131, 1.092703, TEMPSUMMON_TIMED_DESPAWN, HOUR * IN_MILLISECONDS);
+                    break;
             }
         }
     }
