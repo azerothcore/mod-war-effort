@@ -858,7 +858,7 @@ std::string WarEffort::PrintOutMaterialCount(uint8 team)
 class ModAQWarEffortPlayerScript : public PlayerScript
 {
 public:
-    ModAQWarEffortPlayerScript() : PlayerScript("ModAQWarEffortPlayerScript"; {
+    ModAQWarEffortPlayerScript() : PlayerScript("ModAQWarEffortPlayerScript", {
         PLAYERHOOK_ON_PLAYER_COMPLETE_QUEST
     }) { }
 
