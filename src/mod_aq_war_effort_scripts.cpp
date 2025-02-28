@@ -956,7 +956,7 @@ public:
         WORLDHOOK_ON_SHUTDOWN_INITIATE
     }) { }
 
-    void OnAfterConfigLoad(bool reload) override
+    void OnAfterConfigLoad(bool /*reload*/) override
     {
         ScheduleTasks();
     }
