@@ -238,8 +238,6 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
 {
     // @todo: This whole thing probably could be done better, but no time to find a better design right now.
 
-    uint32 goal = team == TEAM_ALLIANCE ? WarEffortMaterialsAlliance[material].Goal : WarEffortMaterialsHorde[material].Goal;
-
     switch (material)
     {
         // Bandages
