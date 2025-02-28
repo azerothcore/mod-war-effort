@@ -1140,7 +1140,7 @@ struct npc_mod_war_effort_quartermaster : public ScriptedAI
 class unit_wareffort_script : public UnitScript
 {
 public:
-    unit_wareffort_script() : UnitScript("unit_wareffort_script", {
+    unit_wareffort_script() : UnitScript("unit_wareffort_script", true, {
         UNITHOOK_ON_UNIT_DEATH
     }) { }
 
