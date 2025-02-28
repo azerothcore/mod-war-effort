@@ -1,11 +1,11 @@
 #ifndef DEF_WAREFFORT_H
 #define DEF_WAREFFORT_H
 
-#include "Player.h"
 #include "Config.h"
-#include "ScriptMgr.h"
-#include "ScriptedGossip.h"
 #include "GameEventMgr.h"
+#include "Player.h"
+#include "ScriptedGossip.h"
+#include "ScriptMgr.h"
 #include <unordered_map>
 #include <vector>
 
