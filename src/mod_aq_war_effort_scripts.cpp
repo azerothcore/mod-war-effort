@@ -979,7 +979,7 @@ public:
         {
             _scheduler.CancelAll();
 
-            _scheduler.Schedule(1min, [this](TaskContext context)
+            _scheduler.Schedule(1min, [](TaskContext context)
             {
                 if (sWarEffort->IsSaveNeeded())
                 {
