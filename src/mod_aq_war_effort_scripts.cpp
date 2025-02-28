@@ -1054,7 +1054,7 @@ struct npc_mod_war_effort_quartermaster : public ScriptedAI
 {
     npc_mod_war_effort_quartermaster(Creature* creature) : ScriptedAI(creature) { }
 
-    void sGossipSelect(Player* player, uint32 menuId, uint32 gossipListId) override
+    void sGossipSelect(Player* player, uint32 /*menuId*/, uint32 gossipListId) override
     {
         std::string text = "Nothing to report.";
 
@@ -1144,7 +1144,7 @@ public:
         UNITHOOK_ON_UNIT_DEATH
     }) { }
 
-    void OnUnitDeath(Unit* me, Unit* killer) override
+    void OnUnitDeath(Unit* me, Unit* /*killer*/) override
     {
         if (sWarEffort->IsEnabled())
         {
