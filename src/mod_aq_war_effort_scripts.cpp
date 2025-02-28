@@ -2,12 +2,12 @@
  * Copyright (C) 2016+ AzerothCore <www.azerothcore.org>, released under GNU AGPL v3 license: https://github.com/azerothcore/azerothcore-wotlk/blob/master/LICENSE-AGPL3
  */
 
-#include "ScriptMgr.h"
-#include "Player.h"
 #include "Chat.h"
 #include "Config.h"
+#include "Player.h"
 #include "QueryResult.h"
 #include "ScriptedCreature.h"
+#include "ScriptMgr.h"
 #include "TaskScheduler.h"
 #include "WarEffort.h"
 
@@ -96,9 +96,7 @@ void WarEffort::LoadData()
     }
 
     if (IsWarEffortComplete(TEAM_NEUTRAL))
-    {
         isComplete = true;
-    }
 };
 
 bool WarEffort::IsBellowPercentGathered(uint8 material, uint8 team, float pct)
@@ -109,135 +107,91 @@ bool WarEffort::IsBellowPercentGathered(uint8 material, uint8 team, float pct)
             if (team == TEAM_ALLIANCE)
             {
                 if ((sWarEffort->materialsAlliance[MATERIAL_LINEN] * pct) < (WarEffortMaterialsAlliance[MATERIAL_LINEN].Goal * pct))
-                {
                     return true;
-                }
 
                 if ((sWarEffort->materialsAlliance[MATERIAL_SILK] * pct) < (WarEffortMaterialsAlliance[MATERIAL_SILK].Goal * pct))
-                {
                     return true;
-                }
 
                 if ((sWarEffort->materialsAlliance[MATERIAL_RUNECLOTH_A] * pct) < (WarEffortMaterialsAlliance[MATERIAL_RUNECLOTH_A].Goal * pct))
-                {
                     return true;
-                }
             }
             else
             {
                 if ((sWarEffort->materialsHorde[MATERIAL_WOOL] * pct) < (WarEffortMaterialsHorde[MATERIAL_WOOL].Goal * pct))
-                {
                     return true;
-                }
 
                 if ((sWarEffort->materialsHorde[MATERIAL_MAGEWEAVE] * pct) < (WarEffortMaterialsHorde[MATERIAL_MAGEWEAVE].Goal * pct))
-                {
                     return true;
-                }
 
                 if ((sWarEffort->materialsHorde[MATERIAL_RUNECLOTH_B] * pct) < (WarEffortMaterialsHorde[MATERIAL_RUNECLOTH_B].Goal * pct))
-                {
                     return true;
-                }
             }
             break;
         case MATERIAL_CAT_FOOD:
             if (team == TEAM_ALLIANCE)
             {
                 if ((sWarEffort->materialsAlliance[MATERIAL_ALBACORE] * pct) < (WarEffortMaterialsAlliance[MATERIAL_ALBACORE].Goal * pct))
-                {
                     return true;
-                }
 
                 if ((sWarEffort->materialsAlliance[MATERIAL_RAPTOR] * pct) < (WarEffortMaterialsAlliance[MATERIAL_RAPTOR].Goal * pct))
-                {
                     return true;
-                }
 
                 if ((sWarEffort->materialsAlliance[MATERIAL_YELLOWTAIL_A] * pct) < (WarEffortMaterialsAlliance[MATERIAL_YELLOWTAIL_A].Goal * pct))
-                {
                     return true;
-                }
             }
             else
             {
                 if ((sWarEffort->materialsHorde[MATERIAL_WOLF] * pct) < (WarEffortMaterialsHorde[MATERIAL_WOLF].Goal * pct))
-                {
                     return true;
-                }
 
                 if ((sWarEffort->materialsHorde[MATERIAL_SALMON] * pct) < (WarEffortMaterialsHorde[MATERIAL_SALMON].Goal * pct))
-                {
                     return true;
-                }
 
                 if ((sWarEffort->materialsHorde[MATERIAL_YELLOWTAIL_H] * pct) < (WarEffortMaterialsHorde[MATERIAL_YELLOWTAIL_H].Goal * pct))
-                {
                     return true;
-                }
             }
             break;
         case MATERIAL_CAT_HERBS:
             if (team == TEAM_ALLIANCE)
             {
                 if ((sWarEffort->materialsAlliance[MATERIAL_STRANGLEKELP] * pct) < (WarEffortMaterialsAlliance[MATERIAL_STRANGLEKELP].Goal * pct))
-                {
                     return true;
-                }
 
                 if ((sWarEffort->materialsAlliance[MATERIAL_ARTHAS_TEARS] * pct) < (WarEffortMaterialsAlliance[MATERIAL_ARTHAS_TEARS].Goal * pct))
-                {
                     return true;
-                }
-
+ 
                 if ((sWarEffort->materialsAlliance[MATERIAL_PURPLE_LOTUS_A] * pct) < (WarEffortMaterialsAlliance[MATERIAL_PURPLE_LOTUS_A].Goal * pct))
-                {
                     return true;
-                }
             }
             else
             {
                 if ((sWarEffort->materialsHorde[MATERIAL_PEACEBLOOM] * pct) < (WarEffortMaterialsHorde[MATERIAL_PEACEBLOOM].Goal * pct))
-                {
                     return true;
-                }
-
+ 
                 if ((sWarEffort->materialsHorde[MATERIAL_FIREBLOOM] * pct) < (WarEffortMaterialsHorde[MATERIAL_FIREBLOOM].Goal * pct))
-                {
                     return true;
-                }
 
                 if ((sWarEffort->materialsHorde[MATERIAL_PURPLE_LOTUS_H] * pct) < (WarEffortMaterialsHorde[MATERIAL_PURPLE_LOTUS_H].Goal * pct))
-                {
                     return true;
-                }
             }
             break;
         case MATERIAL_CAT_METAL:
                 if (team == TEAM_ALLIANCE)
                 {
                     if ((sWarEffort->materialsAlliance[MATERIAL_IRON] * pct) < (WarEffortMaterialsAlliance[MATERIAL_IRON].Goal * pct))
-                    {
                         return true;
-                    }
                 }
                 else if ((sWarEffort->materialsHorde[MATERIAL_TIN] * pct) < (WarEffortMaterialsHorde[MATERIAL_TIN].Goal * pct))
-                {
                     return true;
-                }
             break;
         case MATERIAL_CAT_LEATHER:
                 if (team == TEAM_ALLIANCE)
                 {
                     if ((sWarEffort->materialsAlliance[MATERIAL_LIGHT_LEATHER] * pct) < (WarEffortMaterialsAlliance[MATERIAL_LIGHT_LEATHER].Goal * pct))
-                    {
                         return true;
-                    }
                 }
                 else if ((sWarEffort->materialsHorde[MATERIAL_HEAVY_LEATHER] * pct) < (WarEffortMaterialsHorde[MATERIAL_HEAVY_LEATHER].Goal * pct))
-                {
                     return true;
-                }
             break;
         default:
             break;
@@ -254,28 +208,20 @@ bool WarEffort::IsWarEffortComplete(uint8 team)
         if (team == TEAM_ALLIANCE)
         {
             if (IsBellowPercentGathered(cat, TEAM_ALLIANCE, 100.0f))
-            {
                 return false;
-            }
 
         } else if (team == TEAM_HORDE)
         {
             if (IsBellowPercentGathered(cat, TEAM_HORDE, 100.0f))
-            {
                 return false;
-            }
         }
         else
         {
             if (IsBellowPercentGathered(cat, TEAM_ALLIANCE, 100.0f))
-            {
                 return false;
-            }
 
             if (IsBellowPercentGathered(cat, TEAM_HORDE, 100.0f))
-            {
                 return false;
-            }
         }
     }
 
@@ -285,9 +231,7 @@ bool WarEffort::IsWarEffortComplete(uint8 team)
 void WarEffort::RemoveNearbyObject(uint32 entry, Unit* unit)
 {
     if (GameObject* go = unit->FindNearestGameObject(entry, 50.0f))
-    {
         go->Delete();
-    }
 }
 
 void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
@@ -883,9 +827,7 @@ void WarEffort::CheckGoal(Unit* unit, uint8 material, uint8 team)
         if (!isComplete)
         {
             if (Player* player = unit->ToPlayer())
-            {
                 ChatHandler(player->GetSession()).SendSysMessage("All the required War Effort resources have been gathered. The expedition presses on to Silithus!");
-            }
 
             isComplete = true;
         }
@@ -899,28 +841,16 @@ std::string WarEffort::PrintOutMaterialCount(uint8 team)
     if (team == TEAM_ALLIANCE)
     {
         for (WarEffortData data : WarEffortMaterialsAlliance)
-        {
             if (Quest const* quest = sObjectMgr->GetQuestTemplate(data.QuestId))
-            {
                 if (ItemTemplate const* item = sObjectMgr->GetItemTemplate(quest->RequiredItemId[0]))
-                {
                     output.append(item->Name1 + " (" + Acore::ToString(materialsAlliance[data.Material] * data.Multiplier) + ") Goal:" + Acore::ToString(data.Goal) + "\n");
-                }
-            }
-        }
     }
     else
     {
         for (WarEffortData data : WarEffortMaterialsHorde)
-        {
             if (Quest const* quest = sObjectMgr->GetQuestTemplate(data.QuestId))
-            {
                 if (ItemTemplate const* item = sObjectMgr->GetItemTemplate(quest->RequiredItemId[0]))
-                {
                     output.append(item->Name1 + " (" + Acore::ToString(materialsHorde[data.Material] * data.Multiplier) + ") Goal:" + Acore::ToString(data.Goal) + "\n");
-                }
-            }
-        }
     }
 
     return output;
@@ -930,9 +860,11 @@ std::string WarEffort::PrintOutMaterialCount(uint8 team)
 class ModAQWarEffortPlayerScript : public PlayerScript
 {
 public:
-    ModAQWarEffortPlayerScript() : PlayerScript("ModAQWarEffortPlayerScript") { }
+    ModAQWarEffortPlayerScript() : PlayerScript("ModAQWarEffortPlayerScript"; {
+        PLAYERHOOK_ON_PLAYER_COMPLETE_QUEST
+    }) { }
 
-    void OnPlayerCompleteQuest(Player* player, Quest const* quest)
+    void OnPlayerCompleteQuest(Player* player, Quest const* quest) override
     {
         if (quest->GetQuestId() == QUEST_BANG_GONG && !sWarEffort->gongBanged)
         {
@@ -1019,7 +951,12 @@ public:
 class ModWarEffortWorldScript : public WorldScript
 {
 public:
-    ModWarEffortWorldScript() : WorldScript("ModWarEffortWorldScript") { }
+    ModWarEffortWorldScript() : WorldScript("ModWarEffortWorldScript", {
+        WORLDHOOK_ON_AFTER_CONFIG_LOAD,
+        WORLDHOOK_ON_STARTUP,
+        WORLDHOOK_ON_UPDATE,
+        WORLDHOOK_ON_SHUTDOWN_INITIATE
+    }) { }
 
     void OnAfterConfigLoad(bool reload) override
     {
@@ -1035,9 +972,7 @@ public:
     void OnUpdate(uint32 diff) override
     {
         if (sWarEffort->IsEnabled())
-        {
             _scheduler.Update(diff);
-        }
     }
 
     void ScheduleTasks()
@@ -1055,9 +990,7 @@ public:
                 }
 
                 if (sWarEffort->IsEnabled())
-                {
                     context.Repeat();
-                }
             });
         }
     }
@@ -1209,7 +1142,9 @@ struct npc_mod_war_effort_quartermaster : public ScriptedAI
 class unit_wareffort_script : public UnitScript
 {
 public:
-    unit_wareffort_script() : UnitScript("unit_wareffort_script") { }
+    unit_wareffort_script() : UnitScript("unit_wareffort_script", {
+        UNITHOOK_ON_UNIT_DEATH
+    }) { }
 
     void OnUnitDeath(Unit* me, Unit* killer) override
     {
@@ -1223,9 +1158,7 @@ public:
                         me->GetMap()->DoForAllPlayers([&](Player* player)
                         {
                             if (player->GetQuestStatus(8288) == QUEST_STATUS_INCOMPLETE)
-                            {
                                 player->AddItem(20383, 1);
-                            }
                         });
                     }
                     break;
@@ -1271,22 +1204,16 @@ public:
         handler->SendSysMessage(sWarEffort->PrintOutMaterialCount(TEAM_ALLIANCE));
 
         if (sWarEffort->IsWarEffortComplete(TEAM_ALLIANCE))
-        {
             handler->SendSysMessage("The Alliance has gathered all the required materials!");
-        }
 
         handler->SendSysMessage("-- Horde Gathered Resources --");
         handler->SendSysMessage(sWarEffort->PrintOutMaterialCount(TEAM_HORDE));
 
         if (sWarEffort->IsWarEffortComplete(TEAM_HORDE))
-        {
             handler->SendSysMessage("The Horde has gathered all the required materials!");
-        }
 
         if (sWarEffort->IsWarEffortComplete(TEAM_NEUTRAL))
-        {
             handler->SendSysMessage("All the required War Effort resources have been gathered. The expedition presses on to Silithus!");
-        }
 
         return true;
     }
