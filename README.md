@@ -1,25 +1,47 @@
-# SKELETON - Module template
+# ![logo](https://raw.githubusercontent.com/azerothcore/azerothcore.github.io/master/images/logo-github.png) AzerothCore
+
+## mod-war-effort
 
 [English](README.md) | [Español](README_ES.md)
 
+- Latest build status with azerothcore:
 
-## How to create your own module
+[![Build Status](https://github.com/azerothcore/mod-war-effort/workflows/core-build/badge.svg)](https://github.com/azerothcore/mod-war-effort)
 
-1. Use the script `create_module.sh` located in [`modules/`](https://github.com/azerothcore/azerothcore-wotlk/tree/master/modules) to start quickly with all the files you need and your git repo configured correctly (heavily recommended).
-1. You can then use these scripts to start your project: https://github.com/azerothcore/azerothcore-boilerplates
-1. Do not hesitate to compare with some of our newer/bigger/famous modules.
-1. Edit the `README.md` and other files (`include.sh` etc...) to fit your module. Note: the README is automatically created from `README_example.md` when you use the script `create_module.sh`.
-1. Publish your module to our [catalogue](https://github.com/azerothcore/modules-catalogue).
+## Description
 
+- This module brings back the war effort of the two factions for the opening of the gates of Ahn'Qiraj
 
-## How to test your module?
+## How to install
 
-Disable PCH (precompiled headers) and try to compile. To disable PCH, set `-DNOPCH=1` with Cmake (more info [here](http://www.azerothcore.org/wiki/CMake-options)).
+1. Simply place the module under the `modules` directory of your AzerothCore source
 
-If you forgot some headers, it is time to add them!
+You can do clone it via git under the azerothcore/modules directory:
 
-## Licensing
+```sh
+cd path/to/azerothcore/modules
+git clone https://github.com/azerothcore/mod-war-effort.git
+```
 
-The default license of the skeleton-module template is the MIT but you can use a different license for your own modules.
+or you can manually [download the module](https://github.com/azerothcore/mod-war-effort/archive/master.zip), unzip the Transmog folder and place it under the `azerothcore/modules` directory.
 
-So modules can also be kept private. However, if you need to add new hooks to the core, as well as improving existing ones, you have to share your improvements because the main core is released under the AGPL license. Please [provide a PR](https://www.azerothcore.org/wiki/How-to-create-a-PR) if that is the case.
+2. Import the SQL to the right Database (world & characters)
+
+Import the SQL manually to the right Database (world & characters) or with the `db_assembler.sh` (if `include.sh` provided).
+
+3. Re-run CMake and rebuild the AzerothCore source
+
+4. Edit module configuration
+
+Go to your server configuration folder (where your worldserver or worldserver.exe is), copy `mod_aq_war_effort.conf.dist` to `mod_aq_war_effort.conf` and edit that new file.
+
+```
+#    ModWarEffort.Enable
+#        Description: Enables the module
+#        Default:     0 - Disabled
+#                     1 - Enabled
+```
+
+## License
+
+This module is released under the [MIT license](https://github.com/azerothcore/mod-war-effort/blob/master/LICENSE).
