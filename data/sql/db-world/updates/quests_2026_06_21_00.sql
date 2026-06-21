@@ -1,4 +1,4 @@
--- Fix worldserver errors
+-- Fix worldserver errors that occur due to these entries being deleted from creature table in the quests.sql queries but not from game_event_creature
 DELETE FROM `game_event_creature` WHERE `guid` IN (
     83113, 83114, 83115, 83116, 83120, 83121, 83122, 83123, 83124, 83125,
     83126, 83127, 83128, 83129, 83130, 83131, 83132, 83133, 83134, 83140,
