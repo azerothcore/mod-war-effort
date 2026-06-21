@@ -1,3 +1,14 @@
+-- The core spawns these AQ War Effort NPCs as game_event 22 creatures. This module replaces them
+-- with permanent spawns below, so drop the game_event_creature rows that would otherwise dangle
+-- once the core creatures are deleted.
+DELETE FROM `game_event_creature` WHERE `guid` IN (
+  SELECT `guid` FROM `creature` WHERE `id` IN (
+    15383, 15431, 15432, 15434, 15437, 15445, 15446, 15448, 15450, 15451, 15452, 15453, 15455, 15456, 15457,
+    15459, 15460, 15469, 15477, 15508, 15512, 15515, 15522, 15525, 15528, 15529, 15532, 15533, 15534, 15535,
+    15700, 15701, 15731, 15733, 15734, 15735, 15736, 15737, 15738, 15739
+  )
+);
+
 DELETE FROM `creature` WHERE `id` IN (15383, 15431, 15432, 15434, 15437, 15445, 15446, 15448, 15450, 15451, 15452, 15453, 15455, 15456, 15457, 15700);
 INSERT INTO `creature` (`guid`, `id`, `map`, `zoneId`, `areaId`, `spawnMask`, `phaseMask`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `wander_distance`, `currentwaypoint`, `curhealth`, `curmana`, `MovementType`, `npcflag`, `unit_flags`, `dynamicflags`, `ScriptName`, `VerifiedBuild`) VALUES
 (3115452,15383,0,0,0,1,1,1,-4914.29,-1228.1,501.65,3.66003,300,0,0,13495,0,0,0,0,0,'',0),
